@@ -1,0 +1,93 @@
+﻿@model IEnumerable<LibraryAdmin2.Models.Book>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @if (ViewBag.ToAction != null)
+        {
+            @:
+            <th></th>
+        }
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Isbn)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AvailableCopies)
+        </th>
+        <th>
+            @*@Html.DisplayNameFor(model => model.BookAuthors)*@
+        </th>
+        <th>Authors</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (ViewBag.ToAction != null)
+            {
+                <text>
+                    <td>
+                        @Html.ActionLink((string)ViewBag.ActionLabel, (string)ViewBag.ToAction, new { id = item.Id }, new { @class = ViewBag.ActionLabelClass })
+                        <p style="display:none" class="id">@item.Id</p>
+                        @*@Html.HiddenFor(modelItem => item.Id, new { @class = "Id"})*@
+                    </td>
+                </text>
+            }
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isbn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AvailableCopies)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.BookAuthors)*@aaa
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Authors)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/BookAuthor.js"></script>
