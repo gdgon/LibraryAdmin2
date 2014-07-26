@@ -33,6 +33,11 @@ namespace LibraryAdmin2.Controllers
             {
                 return HttpNotFound();
             }
+            var bookArray = db.Books.Include(b => b.Authors)
+                                     .Where(b => b.Authors.Any(a => a.Id == id))
+                                     .Select(b => b.Id)
+                                     .ToArray();
+            ViewBag.BookIds = bookArray;
             return View(author);
         }
 
@@ -47,12 +52,12 @@ namespace LibraryAdmin2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include="Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
+        public ActionResult Create([Bind(Include = "Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
         {
             if (ModelState.IsValid)
             {
                 if (Author.Create(author, db))
-                    return RedirectToAction("Index");
+                    return RedirectToAction("List");
                 else
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }
@@ -80,7 +85,7 @@ namespace LibraryAdmin2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include="Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
+        public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
         {
             if (ModelState.IsValid)
             {
@@ -155,12 +160,18 @@ namespace LibraryAdmin2.Controllers
                     return View(authorsToList);
             }
             else
-            { 
+            {
                 // List everything
-                if (partial == true)
-                    return PartialView(db.Authors.ToList());
+                var allAuthors = db.Authors.ToList();
+                if (allAuthors != null)
+                {
+                    if (partial == true)
+                        return PartialView(allAuthors);
+                    else
+                        return View(allAuthors);
+                }
                 else
-                    return View(db.Authors.ToList());
+                    return View();
             }
         }
 

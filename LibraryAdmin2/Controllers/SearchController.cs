@@ -22,21 +22,60 @@ namespace LibraryAdmin2.Controllers
             return View();
         }
 
-        // GET: /Search/PopupAuthor
-        public ActionResult PopupAuthor(bool? partial)
+        // GET: /Search/Author
+        public ActionResult Author(bool? partial)
         {
-        return PartialView();
+        return View();
         }
 
-        // POST: /Search/PopupAuthor
+        // POST: /Search/Author
         [HttpPost]
-        public ActionResult PopupAuthor(NameViewModel name)
+        public ActionResult Author(NameViewModel name)
         {
             // Get search matches
-            int[] ids = db.Authors.Where(a => a.FirstName.Contains(name.FirstName)).Union(
+            int[] ids = db.Authors.Where(a => a.FirstName.Contains(name.FirstName)).Intersect(
                         db.Authors.Where(a => a.LastName.Contains(name.LastName)))
                                     .Select(a => a.Id)
                                     .ToArray();
+
+            // Show results
+            if (ids.Count() == 0)
+            {
+                // No match
+                return View("NoResultsFound");
+            }
+            else
+            {
+                // Match found
+                // Redirect to target List action with relevant URL params
+                UrlBuilder url = new UrlBuilder(this, "List", "Author");
+                //url.AppendParam("toAction", "#");
+                //url.AppendParam("actionLabel", "Select");
+                url.AppendParam("partial", true);
+                //url.AppendParam("actionLabelClass", "btn-select");
+                for (var i = 0; i < ids.Length; i++)
+                {
+                    url.AppendParam("ids", ids[i]);
+                }
+                return Redirect(url.ToString());
+            }
+        }
+
+        // GET: /Search/Book
+        public ActionResult Book(bool? partial)
+        {
+            return View();
+        }
+
+        // POST: /Search/Book
+        [HttpPost]
+        public ActionResult Book(string Title, string Isbn)
+        {
+            // Get search matches
+            int[] ids = db.Books.Where(a => a.Title.Contains(Title)).Intersect(
+                        db.Books.Where(a => a.Isbn.Contains(Isbn)))
+                                .Select(a => a.Id)
+                                .ToArray();
 
             // Show results
             if (ids.Count() == 0)
@@ -48,11 +87,49 @@ namespace LibraryAdmin2.Controllers
             {
                 // Match found
                 // Redirect to target List action with relevant URL params
-                UrlBuilder url = new UrlBuilder(this, "List", "Author");
-                url.AppendParam("toAction", "#");
-                url.AppendParam("actionLabel", "Select");
+                UrlBuilder url = new UrlBuilder(this, "List", "Book");
+                //url.AppendParam("toAction", "#");
+                //url.AppendParam("actionLabel", "Select");
                 url.AppendParam("partial", true);
-                url.AppendParam("actionLabelClass", "btn-select");
+                //url.AppendParam("actionLabelClass", "btn-select");
+                for (var i = 0; i < ids.Length; i++)
+                    url.AppendParam("ids", ids[i]);
+
+                return Redirect(url.ToString());
+            }
+        }
+
+        // GET: /Search/Borrower
+        public ActionResult Borrower(bool? partial)
+        {
+            return View();
+        }
+
+        // POST: /Search/Borrower
+        [HttpPost]
+        public ActionResult Borrower(string FirstName, string LastName)
+        {
+            // Get search matches
+            int[] ids = db.Borrowers.Where(b => b.FirstName.Contains(FirstName)).Intersect(
+                        db.Borrowers.Where(b => b.LastName.Contains(LastName)))
+                                    .Select(a => a.Id)
+                                    .ToArray();
+
+            // Show results
+            if (ids.Count() == 0)
+            {
+                // No match
+                return View("NoResultsFound");
+            }
+            else
+            {
+                // Match found
+                // Redirect to target List action with relevant URL params
+                UrlBuilder url = new UrlBuilder(this, "List", "Author");
+                //url.AppendParam("toAction", "#");
+                //url.AppendParam("actionLabel", "Select");
+                url.AppendParam("partial", true);
+                //url.AppendParam("actionLabelClass", "btn-select");
                 for (var i = 0; i < ids.Length; i++)
                 {
                     url.AppendParam("ids", ids[i]);

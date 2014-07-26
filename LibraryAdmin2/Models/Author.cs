@@ -15,6 +15,7 @@ namespace LibraryAdmin2.Models
         }
 
         public int Id { get; set; }
+        public string Name { get; set; }
         [Display(Name="First Name")]
         public string FirstName { get; set; }
         [Display(Name = "Last Name")]
@@ -27,11 +28,12 @@ namespace LibraryAdmin2.Models
         public string ShortDescription { get; set; }
         [UIHint("TextArea")]
         public string Description { get; set; }
-        [UIHint("Authors")]
+        [UIHint("Books")]
         public virtual ICollection<Book> Books { get; set; }
         
         public static bool Create(Author author, LibraryAdmin2Db db)
         {
+            author.Name = author.FirstName + " " + author.LastName;
             db.Authors.Add(author);
             db.SaveChanges();
             return true;

@@ -1,6 +1,4 @@
-﻿@model LibraryAdmin2.ViewModels.NameViewModel
-
-<link rel="stylesheet" type="text/css" href="~/Content/Site.css">
+﻿<link rel="stylesheet" type="text/css" href="~/Content/Site.css">
 <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
 
 @Scripts.Render("~/bundles/jquery")
@@ -8,9 +6,9 @@
 
 <h2>Search</h2>
 <div id="searchForm">
-    <h4>Author</h4>
+    <h4>Book</h4>
     <hr />
-    @using (Ajax.BeginForm("PopupAuthor",
+    @using (Ajax.BeginForm("Book",
                             "Search",
                             new AjaxOptions
                             {
@@ -21,15 +19,15 @@
     {
         <div class="form-horizontal">
             <div class="form-group">
-                @Html.LabelFor(m => m.FirstName, new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2">Title</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(m => m.FirstName)
+                    @Html.TextBox("Title")
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.LastName, new { @class = "control-label col-md-2" })
+                <label class="control-label col-md-2">ISBN</label>
                 <div class="col-md-10">
-                    @Html.EditorFor(m => m.LastName)
+                    @Html.TextBox("ISBN")
                 </div>
             </div>
             <div class="form-group">

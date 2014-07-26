@@ -1,8 +1,0 @@
-﻿@model ICollection<LibraryAdmin2.Models.BookAuthor>
-
-@{foreach (var bookAuthor in Model)
-  {
-      @bookAuthor.Author.Id <text>: </text>@bookAuthor.Author.FirstName <text> </text> @bookAuthor.Author.LastName
-    <br />
-  }
-}

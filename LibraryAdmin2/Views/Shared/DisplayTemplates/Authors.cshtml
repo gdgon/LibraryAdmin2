@@ -1,8 +1,9 @@
 ﻿@model ICollection<LibraryAdmin2.Models.Author>
 
-@{foreach (var bookAuthor in Model)
-{
-    @bookAuthor.Id <text>: </text>@bookAuthor.FirstName <text> </text> @bookAuthor.LastName
-    <br />
-}
-}
+<ul style="padding-left: 0">
+    @{foreach (var author in Model)
+    {
+        <li>@Html.ActionLink(@author.Name, "Details", "Author", new { id = author.Id }, null)</li>
+    }
+    }
+</ul>

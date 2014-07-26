@@ -38,6 +38,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Book/Create
         public ActionResult Create()
         {
+            ViewBag.AuthorId = new SelectList(db.Authors, "Id", "Name");
             return View();
         }
 
@@ -46,7 +47,7 @@ namespace LibraryAdmin2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Title,Isbn,ImageUrl,ShortDescription,Description,AvailableCopies,authorId")] Book book, int[] authorId)
+        public ActionResult Create([Bind(Include = "Id,Title,Isbn,ImageUrl,ShortDescription,Description,AvailableCopies,AuthorId")] Book book, int[] AuthorId)
         {
             if (ModelState.IsValid)
             {
@@ -65,14 +66,17 @@ namespace LibraryAdmin2.Controllers
                 //}
 
                 book.Authors = new List<Author>();
-                for (var i = 0; i < authorId.Length; i++)
+                for (var i = 0; i < AuthorId.Length; i++)
                 {
-                    Author a = db.Authors.Find(authorId[i]);
+                    Author a = db.Authors.Find(AuthorId[i]);
                     book.Authors.Add(a);
                 }
 
+                // Remove duplicates (untested)
+                book.Authors = book.Authors.GroupBy(a => a.Id).Select(x => x.First()).ToList();
+
                 if (Book.Create(book, db))
-                    return RedirectToAction("Index");
+                    return RedirectToAction("List");
                 else
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
             }

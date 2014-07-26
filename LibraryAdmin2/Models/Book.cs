@@ -17,12 +17,15 @@ namespace LibraryAdmin2.Models
         [UIHint("Picture")]
         public string ImageUrl { get; set; }
         [Display(Name = "Short Description")]
+        [UIHint("TextArea")]
         public string ShortDescription { get; set; }
         [Display(Name = "Description")]
+        [UIHint("TextArea")]
         public string Description { get; set; }
         [Display(Name = "Available Copies")]
         [Range(0, Int32.MaxValue)]
         public int AvailableCopies { get; set; }
+        [Display(Name = "Authors")]
         [UIHint("Authors")]
         public virtual ICollection<Author> Authors { get; set; }
 

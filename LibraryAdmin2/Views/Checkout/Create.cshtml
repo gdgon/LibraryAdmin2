@@ -1,0 +1,85 @@
+﻿@model LibraryAdmin2.Models.Checkout
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Checkout</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.BookId, "BookId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("BookId", String.Empty)
+                @Html.ValidationMessageFor(model => model.BookId)
+            </div>
+        </div>*@
+
+        <div class="form-group" id="book-form">
+            @Html.Label("Author(s)", new { @class = "control-label col-md-2" })
+            @Html.ActionLink("Add author", " ", null, new { @id = "btn-add-author" })
+
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.AuthorId, "AuthorId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("AuthorId", String.Empty)
+                @Html.ValidationMessageFor(model => model.AuthorId)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PolicyId, "PolicyId", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PolicyId", String.Empty)
+                @Html.ValidationMessageFor(model => model.PolicyId)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.Returned, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Returned)
+                @Html.ValidationMessageFor(model => model.Returned)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CheckoutDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CheckoutDate)
+                @Html.ValidationMessageFor(model => model.CheckoutDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DueDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DueDate)
+                @Html.ValidationMessageFor(model => model.DueDate)
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/BookAuthor.js"></script>

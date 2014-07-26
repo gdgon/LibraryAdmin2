@@ -4,11 +4,6 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         @if (ViewBag.ToAction != null)
@@ -16,7 +11,7 @@
             @:
             <th></th>
         }
-        <th>
+        <th style="min-width:15em">
             @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
@@ -28,17 +23,11 @@
         <th>
             @Html.DisplayNameFor(model => model.ShortDescription)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
+        <th style="min-width:15em">@Html.DisplayNameFor(model => model.Authors)</th>
         <th>
             @Html.DisplayNameFor(model => model.AvailableCopies)
         </th>
-        <th>
-            @*@Html.DisplayNameFor(model => model.BookAuthors)*@
-        </th>
-        <th>Authors</th>
-        <th></th>
+        @*<th></th>*@
     </tr>
 
     @foreach (var item in Model)
@@ -55,7 +44,8 @@
                 </text>
             }
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.ActionLink(item.Title, "Details", "Book", new { id = item.Id }, null)
+                @*@Html.DisplayFor(modelItem => item.Title)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Isbn)
@@ -67,22 +57,16 @@
                 @Html.DisplayFor(modelItem => item.ShortDescription)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Authors)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AvailableCopies)
             </td>
-            <td>
-                @*@Html.DisplayFor(modelItem => item.BookAuthors)*@aaa
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Authors)
-            </td>
-            <td>
+            @*<td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-            </td>
+            </td>*@
         </tr>
     }
 
