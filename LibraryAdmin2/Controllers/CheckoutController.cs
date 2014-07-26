@@ -40,11 +40,13 @@ namespace LibraryAdmin2.Controllers
             var book = db.Books.Find(id);
             var result = CheckoutRequest.Request(book, FirstName, LastName, db);
 
-            if (result == CheckoutRequest.CreateRequestResults.Success)
+            if (result == CheckoutRequest.CreateRequestResult.Success)
                 return View("RequestSuccess");
             else
                 return View("RequestNoCopiesAvailable");
         }
+
+
 
         // GET: /Checkout/Details/5
         public ActionResult Details(int? id)

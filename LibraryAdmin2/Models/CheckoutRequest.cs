@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
@@ -8,10 +10,12 @@ namespace LibraryAdmin2.Models
     public class CheckoutRequest
     {
         public int Id { get; set; }
+        [Display(Name="Borrower's First Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Borrower's Last Name")]
         public string LastName { get; set; }
         public int BookId { get; set; }
-        public Book Book { get; set; }
+        public virtual Book Book { get; set; }
         public DateTime Date { get; set; }
         public RequestStatus Status { get; set; }
 
@@ -22,14 +26,14 @@ namespace LibraryAdmin2.Models
             Approved
         }
 
-        public enum CreateRequestResults
+        public enum CreateRequestResult
         {
             Success,
             Failed,
             NoCopiesAvailable
         }
 
-        public static CreateRequestResults Request(Book book, string FirstName, string LastName, LibraryAdmin2Db db)
+        public static CreateRequestResult Request(Book book, string FirstName, string LastName, LibraryAdmin2Db db)
         {
             if (book.AvailableCopies > 0)
             {
@@ -37,13 +41,29 @@ namespace LibraryAdmin2.Models
                 request.Book = book;
                 request.FirstName = FirstName;
                 request.LastName = LastName;
+                request.Status = RequestStatus.Pending;
+                request.Date = DateTime.Now;
+                request.Book.AvailableCopies -= 1;
                 db.CheckoutRequests.Add(request);
                 db.SaveChanges();
 
-                return CreateRequestResults.Success;
+                return CreateRequestResult.Success;
             }
             else
-                return CreateRequestResults.NoCopiesAvailable;
+                return CreateRequestResult.NoCopiesAvailable;
+        }
+
+        public static void RejectRequest(CheckoutRequest request, LibraryAdmin2Db db)
+        {
+            request.Status = RequestStatus.Rejected;
+            request.Book.AvailableCopies += 1;
+            db.Entry(request).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+
+        public static void ApproveRequest(CheckoutRequest request, Borrower borrower, Policy policy, LibraryAdmin2Db db)
+        {
+            var checkout = new Checkout(request, borrower, policy, db);
         }
     }
 }
