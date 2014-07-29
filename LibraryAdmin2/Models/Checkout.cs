@@ -20,11 +20,14 @@ namespace LibraryAdmin2.Models
             checkout.CheckoutDate = DateTime.Now;
             checkout.Status = CheckoutStatus.Out;
             checkout.DueDate = CalculateDueDate(policy);
-            db.Entry(checkout).State = EntityState.Modified;
+            checkout.Borrower = borrower;
+            db.Checkouts.Add(checkout);
             db.SaveChanges();
         }
 
         public int Id { get; set; }
+        public virtual int BorrowerId { get; set; }
+        public virtual Borrower Borrower { get; set; }
         public virtual int BookId { get; set; }
         public virtual Book Book { get; set; }
         public virtual int PolicyId { get; set; }
@@ -40,11 +43,11 @@ namespace LibraryAdmin2.Models
             Void            
         }
 
-        public static void Return(Checkout checkout, LibraryAdmin2Db db)
+        public void Return(LibraryAdmin2Db db)
         {
-            checkout.Book.AvailableCopies += 1;
-            checkout.Status = CheckoutStatus.Returned;
-            db.Entry(checkout).State = EntityState.Modified;
+            Book.AvailableCopies += 1;
+            Status = CheckoutStatus.Returned;
+            db.Entry(this).State = EntityState.Modified;
             db.SaveChanges();
         }
 

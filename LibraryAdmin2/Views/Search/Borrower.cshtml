@@ -1,0 +1,46 @@
+﻿@model LibraryAdmin2.ViewModels.NameViewModel
+
+<link rel="stylesheet" type="text/css" href="~/Content/Site.css">
+<link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<h2>Search</h2>
+<div id="searchForm">
+    <h4>Author</h4>
+    <hr />
+    @using (Ajax.BeginForm("Borrower",
+                            "Search",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "POST",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "searchResults"
+                            }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                @Html.LabelFor(m => m.FirstName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.FirstName)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.LastName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.LastName)
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Search" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="searchResults">
+</div>
+

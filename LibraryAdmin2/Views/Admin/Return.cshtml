@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Return";
+}
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<h2>Return</h2>
+
+@using (@Html.BeginForm("Return", "Admin", FormMethod.Post, new { id = "Return" }))
+{
+    <dl>
+        @Html.Hidden("CheckoutId")
+        <dt>Borrower:</dt>
+        <dd>
+            @Html.TextBox("BorrowerName", null, new { @readonly = "readonly" })
+        </dd>
+        <dt>
+            Book:
+        </dt>
+        <dd>
+            @Html.TextBox("BookTitle", null, new { @readonly = "readonly" })
+        </dd>
+        <dd>
+            <input type="submit" value="Return" form="Return" />
+        </dd>
+    </dl>
+
+}
+
+<h4>Search for user:</h4>
+
+@using (@Ajax.BeginForm("Checkout", "Search", null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "searchResults",
+                            InsertionMode = InsertionMode.Replace
+                        },
+                        new { id = "userSearch" }))
+{
+    @Html.Hidden("toAction", " ")
+    @Html.Hidden("actionLabel", "Select")
+    @Html.Hidden("actionLabelClass", "selectCheckout")
+    @Html.Hidden("partial", true)
+
+    @Html.TextBox("FirstName") <br />
+    @Html.TextBox("LastName")<br />
+    <input type="submit" value="Search" form="userSearch" />
+}
+
+<div id="searchResults">
+    Accept
+    <br />
+    Reject <br />
+    <p>
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+
+<script>
+    $(document).on("click", ".selectCheckout",
+        function (e) {
+            e.preventDefault();
+            id = $(this).closest("tr").find(".id").text();
+            borrowerName = $(this).closest("tr").find(".BorrowerName").text().trim();
+            bookTitle = $(this).closest("tr").find(".BookTitle").text().trim();
+            $("#BorrowerId").val(id);
+            $("#BorrowerName").val(borrowerName);
+            $("#BookTitle").val(bookTitle);
+            $("#CheckoutId").val(id);
+        });
+</script>

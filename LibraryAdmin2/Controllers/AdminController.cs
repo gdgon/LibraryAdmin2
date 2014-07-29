@@ -1,4 +1,5 @@
 ﻿using LibraryAdmin2.Models;
+using LibraryAdmin2.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace LibraryAdmin2.Controllers
 
         //
         // GET: /Admin/ListCheckoutRequests
-        public ActionResult ListCheckoutRequests ()
+        public ActionResult ListCheckoutRequests()
         {
             var requests = db.CheckoutRequests.Where(r => r.Status == CheckoutRequest.RequestStatus.Pending)
                                               .OrderBy(r => r.Date)
@@ -30,21 +31,63 @@ namespace LibraryAdmin2.Controllers
         }
 
         //
-        // Get /Admin/ReviewCheckoutRequest
-        public ActionResult ReviewCheckoutRequest (int? id)
+        // GET: /Admin/ReviewCheckoutRequest
+        public ActionResult ReviewCheckoutRequest(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
-            CheckoutRequest request = db.CheckoutRequests.Find(id);
+
+            var request = db.CheckoutRequests.Find(id);
+
             if (request == null)
             {
                 return HttpNotFound();
             }
-            return View(request);
-         }
 
-	}
+            // Borrower
+            var matches = db.Borrowers.Where(b => b.FirstName.Contains(request.FirstName))
+                                  .Intersect(
+                      db.Borrowers.Where(b => b.LastName.Contains(request.LastName))).ToList();
+
+            if (matches.Count == 1)
+                ViewBag.Borrower = matches.First();
+
+            // Policy
+            ViewBag.PolicyId = new SelectList(db.Policies, "Id", "Name");
+
+            return View(request);
+        }
+
+        public ActionResult Approve(int RequestId, int PolicyId, int BorrowerId)
+        {
+            var request = db.CheckoutRequests.Find(RequestId);
+            var policy = db.Policies.Find(PolicyId);
+            var borrower = db.Borrowers.Find(BorrowerId);
+            request.Approve(borrower, policy, db);
+
+            return View();
+        }
+
+        public ActionResult Reject(int RequestId)
+        {
+            var request = db.CheckoutRequests.Find(RequestId);
+            request.Reject(db);
+            return View();
+        }
+
+        public ActionResult Return()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Return(int CheckoutId)
+        {
+            var checkout = db.Checkouts.Find(CheckoutId);
+            checkout.Return(db);
+            return View("Returned");
+        }
+    }
 }

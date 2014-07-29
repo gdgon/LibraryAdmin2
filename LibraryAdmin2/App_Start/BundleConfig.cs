@@ -35,6 +35,9 @@ namespace LibraryAdmin2
        "~/Content/themes/base/jquery.ui.core.css",
        "~/Content/themes/base/jquery.ui.datepicker.css",
        "~/Content/themes/base/jquery.ui.theme.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqueryajax").Include(
+             "~/Scripts/jquery.unobtrusive-ajax.js"));
         }
     }
 }

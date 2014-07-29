@@ -1,0 +1,74 @@
+﻿@model IEnumerable<LibraryAdmin2.Models.Checkout>
+
+@{
+    ViewBag.Title = "List";
+}
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        @if (ViewBag.ToAction != null)
+        {
+            <th> </th>
+        }
+        <th class="BorrowerName">
+            @Html.DisplayNameFor(model => model.Borrower.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Policy.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CheckoutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DueDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            @if (ViewBag.ToAction != null)
+            {
+                <text>
+                    <td>
+                        @Html.ActionLink((string)ViewBag.ActionLabel, (string)ViewBag.ToAction, new { id = item.Id }, new { @class = ViewBag.ActionLabelClass })
+                        <p style="display:none" class="id">@item.Id</p>
+                        @*@Html.HiddenFor(modelItem => item.Id, new { @class = "Id"})*@
+                    </td>
+                </text>
+            }
+            <td class="BorrowerName">
+                @Html.DisplayFor(modelItem => item.Borrower.Name)
+            </td>
+            <td class="BookTitle">
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Policy.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CheckoutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DueDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -190,6 +190,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Utils\UrlBuilder.cs" />
     <Compile Include="ViewModels\NameViewModel.cs" />
+    <Compile Include="ViewModels\RequestReviewViewModel.cs" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -296,6 +297,13 @@
     <Content Include="Views\Admin\ListCheckoutRequests.cshtml" />
     <Content Include="Views\Admin\ReviewCheckoutRequest.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Book.cshtml" />
+    <Content Include="Views\Search\Borrower.cshtml" />
+    <Content Include="Views\Borrower\List.cshtml" />
+    <Content Include="Views\Admin\Approve.cshtml" />
+    <Content Include="Views\Admin\Reject.cshtml" />
+    <Content Include="Views\Admin\Return.cshtml" />
+    <Content Include="Views\Checkout\List.cshtml" />
+    <Content Include="Views\Admin\Returned.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>

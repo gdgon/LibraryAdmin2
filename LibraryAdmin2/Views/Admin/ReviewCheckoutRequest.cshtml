@@ -1,14 +1,15 @@
 ﻿@model LibraryAdmin2.Models.CheckoutRequest
 
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Review Checkout Request";
 }
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryajax")
 <h2>View1</h2>
 
 <div>
     <h4>CheckoutRequest</h4>
-	<hr />
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Book.Title)
@@ -49,10 +50,67 @@
         <dd>
             @Html.DisplayFor(model => model.Status)
         </dd>
-
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+@using (@Html.BeginForm("Approve", "Admin", FormMethod.Post, new { id = "Approve" }))
+{
+    @:Policy
+    @Html.DropDownList("PolicyId", String.Empty)
+    <br />
+    @:Borrower:
+    @Html.Hidden("RequestId", Model.Id)
+    if (ViewBag.Borrower != null)
+    {
+        @Html.Hidden("BorrowerId", (int)ViewBag.Borrower.Id)
+        @Html.TextBox("BorrowerName", (string)ViewBag.Borrower.Name)
+    }
+    else
+    {
+        @Html.Hidden("BorrowerId")
+        @Html.TextBox("BorrowerName", null, new { @readonly = "readonly" })
+    }
+    <br />
+    <input type="submit" value="Submit" />
+}
+
+
+Search
+@using (@Ajax.BeginForm("Borrower", "Search", null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "searchResults",
+                            InsertionMode = InsertionMode.Replace
+                        },
+                        new { id = "userSearch" }))
+{
+    @Html.Hidden("toAction", " ")
+    @Html.Hidden("actionLabel", "Select")
+    @Html.Hidden("actionLabelClass", "selectBorrower")
+    @Html.Hidden("partial", true)
+
+    @Html.TextBox("FirstName") <br />
+    @Html.TextBox("LastName")<br />
+    <input type="submit" value="Search" form="userSearch" />
+}
+
+<div id="searchResults">
+    Accept
+    <br />
+    Reject <br />
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
+<script>
+    $(document).on("click", ".selectBorrower",
+        function (e) {
+            e.preventDefault();
+            id = $(this).closest("tr").find(".id").text();
+            name = $(this).closest("tr").find(".name").text().trim();
+            $("#BorrowerId").val(id);
+            $("#BorrowerName").val(name);
+        });
+</script>

@@ -53,17 +53,20 @@ namespace LibraryAdmin2.Models
                 return CreateRequestResult.NoCopiesAvailable;
         }
 
-        public static void RejectRequest(CheckoutRequest request, LibraryAdmin2Db db)
+        public void Reject(LibraryAdmin2Db db)
         {
-            request.Status = RequestStatus.Rejected;
-            request.Book.AvailableCopies += 1;
-            db.Entry(request).State = EntityState.Modified;
+            Status = RequestStatus.Rejected;
+            Book.AvailableCopies += 1;
+            db.Entry(this).State = EntityState.Modified;
             db.SaveChanges();
         }
 
-        public static void ApproveRequest(CheckoutRequest request, Borrower borrower, Policy policy, LibraryAdmin2Db db)
+        public void Approve(Borrower borrower, Policy policy, LibraryAdmin2Db db)
         {
-            var checkout = new Checkout(request, borrower, policy, db);
+            new Checkout(this, borrower, policy, db);
+            db.Entry(this).State = EntityState.Modified;
+            Status = RequestStatus.Approved;
+            db.SaveChanges();
         }
     }
 }
