@@ -50,7 +50,7 @@ namespace LibraryAdmin2.Models
             Status = CheckoutStatus.Returned;
             db.Entry(this).State = EntityState.Modified;
             db.SaveChanges();
-            new LogEvent("Returned (CheckoutId:" + checkout.Id + ") by (BorrowerId:" + checkout.Borrower.Id + ") \"" + checkout.Borrower.Name + "\" for (BookId:" + checkout.Book.Id + ") \"" + checkout.Book.Title + "\" with  " + checkout.Policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
+            new LogEvent("Returned (CheckoutId:" + Id + ") by (BorrowerId:" + Borrower.Id + ") \"" + Borrower.Name + "\" for (BookId:" + Book.Id + ") \"" + Book.Title + "\" with  " + Policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
         }
 
         public static DateTime CalculateDueDate(Policy policy)

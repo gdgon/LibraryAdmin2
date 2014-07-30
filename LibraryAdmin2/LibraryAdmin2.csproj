@@ -182,6 +182,7 @@
     <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\CheckoutRequest.cs" />
+    <Compile Include="Models\LogEvent.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryAdmin2Db.cs" />

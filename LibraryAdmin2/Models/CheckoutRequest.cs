@@ -46,6 +46,8 @@ namespace LibraryAdmin2.Models
                 request.Book.AvailableCopies -= 1;
                 db.CheckoutRequests.Add(request);
                 db.SaveChanges();
+                new LogEvent("Checkout request (RequestId:"
+  + request.Id + ") made by \"" + FirstName + " " + LastName + "for (BookId:" + book.Id + ") \"" + book.Title + "\".", LogEvent.EventTypes.RequestNew, db);
 
                 return CreateRequestResult.Success;
             }
@@ -59,14 +61,18 @@ namespace LibraryAdmin2.Models
             Book.AvailableCopies += 1;
             db.Entry(this).State = EntityState.Modified;
             db.SaveChanges();
+            new LogEvent("REJECTED checkout request (RequestId:"
+      + Id + "for (BookId:" + Book.Id + ") \"" + Book.Title + "\".", LogEvent.EventTypes.RequestRejected, db);
         }
 
         public void Approve(Borrower borrower, Policy policy, LibraryAdmin2Db db)
         {
-            new Checkout(this, borrower, policy, db);
+            var checkout = new Checkout(this, borrower, policy, db);
             db.Entry(this).State = EntityState.Modified;
             Status = RequestStatus.Approved;
             db.SaveChanges();
+            new LogEvent("APPROVED checkout request (RequestId:"
+     + Id + "for (BookId:" + Book.Id + ") \"" + Book.Title + "\" with (CheckoutId:" + checkout.Id + ").", LogEvent.EventTypes.RequestRejected, db);
         }
     }
 }
