@@ -112,6 +112,57 @@ namespace LibraryAdmin2.Controllers
             return RedirectToAction("Index");
         }
 
+        // GET: /Borrower/List
+        // Prints out a list of items with an action link that directs to
+        // another action with the Id of the selected items.
+        // Optionally lists only items specified in ids.
+
+        public ActionResult List(string toAction,
+                                 string actionLabel,
+                                 int[] ids,
+                                 string actionLabelClass,
+                                 bool partial = false)
+        {
+            if (toAction != null)
+            {
+                ViewBag.ToAction = toAction;
+
+                if (actionLabel != null)
+                    ViewBag.ActionLabel = actionLabel;
+                else
+                    ViewBag.ActionLabel = "Select";
+
+                if (actionLabelClass != null)
+                    ViewBag.ActionLabelClass = actionLabelClass;
+
+            }
+
+            if (ids != null)
+            {
+                // List specified subset 
+                List<Borrower> borrowersToList = db.Borrowers.Where(a => ids.Contains(a.Id))
+                                                       .ToList();
+                if (partial == true)
+                    return PartialView(borrowersToList);
+                else
+                    return View(borrowersToList);
+            }
+            else
+            {
+                // List everything
+                var allBorrowers = db.Borrowers.ToList();
+                if (allBorrowers != null)
+                {
+                    if (partial == true)
+                        return PartialView(allBorrowers);
+                    else
+                        return View(allBorrowers);
+                }
+                else
+                    return View();
+            }
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

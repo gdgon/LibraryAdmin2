@@ -14,5 +14,6 @@ namespace LibraryAdmin2.Models
         public DbSet<Checkout> Checkouts { get; set; }
         public DbSet<Borrower> Borrowers { get; set; }
         public DbSet<CheckoutRequest> CheckoutRequests { get; set; }
+        public DbSet<LogEvent> LogEvents { get; set; }
     }
 }

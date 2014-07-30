@@ -25,7 +25,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Search/Author
         public ActionResult Author(bool? partial)
         {
-        return View();
+            return View();
         }
 
         // POST: /Search/Author
@@ -102,7 +102,10 @@ namespace LibraryAdmin2.Controllers
         // GET: /Search/Borrower
         public ActionResult Borrower(bool? partial)
         {
-            return View();
+            if (partial == true)
+                return PartialView();
+            else
+                return View();
         }
 
         // POST: /Search/Borrower
@@ -125,7 +128,7 @@ namespace LibraryAdmin2.Controllers
             {
                 // Match found
                 // Redirect to target List action with relevant URL params
-                UrlBuilder url = new UrlBuilder(this, "List", "Author");
+                UrlBuilder url = new UrlBuilder(this, "List", "Borrower");
                 //url.AppendParam("toAction", "#");
                 //url.AppendParam("actionLabel", "Select");
                 url.AppendParam("partial", true);

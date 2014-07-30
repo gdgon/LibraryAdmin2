@@ -168,6 +168,7 @@
     <Compile Include="Controllers\BorrowerController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LogEventsController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -182,6 +183,7 @@
     <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\CheckoutRequest.cs" />
+    <Compile Include="Models\LogEvent.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryAdmin2Db.cs" />
@@ -296,6 +298,14 @@
     <Content Include="Views\Admin\ListCheckoutRequests.cshtml" />
     <Content Include="Views\Admin\ReviewCheckoutRequest.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Book.cshtml" />
+    <Content Include="Views\Search\Borrower.cshtml" />
+    <Content Include="Views\Borrower\List.cshtml" />
+    <Content Include="Views\LogEvents\Create.cshtml" />
+    <Content Include="Views\LogEvents\Delete.cshtml" />
+    <Content Include="Views\LogEvents\Details.cshtml" />
+    <Content Include="Views\LogEvents\Edit.cshtml" />
+    <Content Include="Views\LogEvents\Index.cshtml" />
+    <Content Include="Views\LogEvents\List.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>

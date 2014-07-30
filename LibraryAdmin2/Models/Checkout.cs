@@ -22,9 +22,12 @@ namespace LibraryAdmin2.Models
             checkout.DueDate = CalculateDueDate(policy);
             db.Entry(checkout).State = EntityState.Modified;
             db.SaveChanges();
+            new LogEvent("New (CheckoutId:" + checkout.Id + ") by (BorrowerId:" + borrower.Id + ") \"" + borrower.Name + "\" for (BookId:" + request.Book.Id + ") \"" + request.Book.Title + "\" with  (PolicyId:" + policy.Id + ") \"" + policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
         }
 
         public int Id { get; set; }
+        public virtual int BorrowerId { get; set; }
+        public virtual Borrower Borrower { get; set; }
         public virtual int BookId { get; set; }
         public virtual Book Book { get; set; }
         public virtual int PolicyId { get; set; }
@@ -46,6 +49,7 @@ namespace LibraryAdmin2.Models
             checkout.Status = CheckoutStatus.Returned;
             db.Entry(checkout).State = EntityState.Modified;
             db.SaveChanges();
+            new LogEvent("Returned (CheckoutId:" + checkout.Id + ") by (BorrowerId:" + checkout.Borrower.Id + ") \"" + checkout.Borrower.Name + "\" for (BookId:" + checkout.Book.Id + ") \"" + checkout.Book.Title + "\" with  " + checkout.Policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
         }
 
         public static DateTime CalculateDueDate(Policy policy)

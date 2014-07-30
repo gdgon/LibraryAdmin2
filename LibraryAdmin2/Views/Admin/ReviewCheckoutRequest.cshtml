@@ -1,14 +1,14 @@
 ﻿@model LibraryAdmin2.Models.CheckoutRequest
 
-@{
-    ViewBag.Title = "View1";
-}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+@Scripts.Render("~/bundles/jqueryui")
 
 <h2>View1</h2>
 
 <div>
     <h4>CheckoutRequest</h4>
-	<hr />
+    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Book.Title)
@@ -16,22 +16,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Book)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LastName)
         </dd>
 
         <dt>
@@ -50,9 +34,58 @@
             @Html.DisplayFor(model => model.Status)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
     </dl>
+
+    @Html.Label("Borrower's on Record")
+    @Html.Hidden("UserId", (int?)ViewBag.UserId)
+    @Html.TextBox("UserName", (string)ViewBag.UserName, null, new { @readonly = "readonly" })
+    <br />
+    <a class="btn-user-search">Search for User</a>
+    <div id="search-form">
+        @using (Ajax.BeginForm("Borrower",
+                               "Search",
+                               new AjaxOptions {
+                                   HttpMethod = "POST",
+                                   InsertionMode = InsertionMode.Replace,
+                                   UpdateTargetId = "searchResults"
+                                }))
+        {
+            @Html.Label("First Name");
+            @Html.TextBox("FirstName");<br />
+            @Html.Label("Last Name");
+            @Html.TextBox("LastName");
+            <input type="submit" value="Search" class="btn btn-default"/>
+        }
+        <div id="searchResults"></div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<script>
+    $(function () {
+        $("#search-form").hide();
+        $(".btn-user-search").click(function (e) {
+            e.preventDefault();
+            $("#search-form").show();
+        })
+    })
+</script>
