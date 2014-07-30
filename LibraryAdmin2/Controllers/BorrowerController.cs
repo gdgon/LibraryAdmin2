@@ -113,15 +113,15 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Borrower/List
-        // Prints out a list of items with an action link that directs to
-        // another action with the Id of the selected items.
+        // Prints out a list of authors with an action link that directs to
+        // another action with the Id of the selected author.
         // Optionally lists only items specified in ids.
 
         public ActionResult List(string toAction,
                                  string actionLabel,
                                  int[] ids,
                                  string actionLabelClass,
-                                 bool partial = false)
+                                 bool? partial)
         {
             if (toAction != null)
             {
@@ -162,7 +162,6 @@ namespace LibraryAdmin2.Controllers
                     return View();
             }
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

@@ -11,6 +11,17 @@ using System.Web.Routing;
 
 namespace LibraryAdmin2.Controllers
 {
+    // Search(string Action, string[] Fields, bool partial?)
+    //  -> if partial, ViewBag.partial = true; PartialView()
+    //  -> on View: show form with fields
+    //      -> on submit
+    //          -> flatten Fields[], partial and submit to Action
+    // Action(bool? partial, string Field1, string Field2 ...)
+    //  -> if partial, PartialView
+    //  -> get result Ids
+    //  -> build URL string: model List() action, append partial, append Ids
+    //  -> redirect to URL
+
     public class SearchController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();
@@ -33,7 +44,7 @@ namespace LibraryAdmin2.Controllers
         public ActionResult Author(NameViewModel name)
         {
             // Get search matches
-            int[] ids = db.Authors.Where(a => a.FirstName.Contains(name.FirstName)).Intersect(
+            int[] ids = db.Authors.Where(a => a.FirstName.Contains(name.FirstName)).Union(
                         db.Authors.Where(a => a.LastName.Contains(name.LastName)))
                                     .Select(a => a.Id)
                                     .ToArray();
@@ -42,7 +53,7 @@ namespace LibraryAdmin2.Controllers
             if (ids.Count() == 0)
             {
                 // No match
-                return View("NoResultsFound");
+                    return View("NoResultsFound");
             }
             else
             {
@@ -81,7 +92,7 @@ namespace LibraryAdmin2.Controllers
             if (ids.Count() == 0)
             {
                 // No match
-                return PartialView("NoResultsFound");
+                    return View("NoResultsFound");
             }
             else
             {
@@ -102,41 +113,91 @@ namespace LibraryAdmin2.Controllers
         // GET: /Search/Borrower
         public ActionResult Borrower(bool? partial)
         {
-            if (partial == true)
-                return PartialView();
-            else
-                return View();
+            ViewBag.partial = true;
+            return View();
         }
 
         // POST: /Search/Borrower
         [HttpPost]
-        public ActionResult Borrower(string FirstName, string LastName)
+        public ActionResult Borrower(string FirstName,
+                                     string LastName,
+                                     bool? partial,
+                                     string toAction,
+                                     string actionLabel,
+                                     string actionLabelClass)
         {
             // Get search matches
-            int[] ids = db.Borrowers.Where(b => b.FirstName.Contains(FirstName)).Intersect(
+            int[] ids = db.Borrowers.Where(b => b.FirstName.Contains(FirstName)).Union(
                         db.Borrowers.Where(b => b.LastName.Contains(LastName)))
                                     .Select(a => a.Id)
                                     .ToArray();
 
             // Show results
             if (ids.Count() == 0)
-            {
                 // No match
-                return View("NoResultsFound");
-            }
+                if (partial == true)
+                    return PartialView("NoResultsFound");
+                else
+                    return View("NoResultsFound");
             else
             {
                 // Match found
                 // Redirect to target List action with relevant URL params
                 UrlBuilder url = new UrlBuilder(this, "List", "Borrower");
-                //url.AppendParam("toAction", "#");
-                //url.AppendParam("actionLabel", "Select");
-                url.AppendParam("partial", true);
-                //url.AppendParam("actionLabelClass", "btn-select");
+                if (partial == true)
+                    url.AppendParam("partial", true);
+                if (toAction != null)
+                    url.AppendParam("toAction", toAction);
+                if (actionLabel != null)
+                    url.AppendParam("actionLabel", actionLabel);
+                if (actionLabelClass != null)
+                    url.AppendParam("actionLabelClass", actionLabelClass);
                 for (var i = 0; i < ids.Length; i++)
-                {
                     url.AppendParam("ids", ids[i]);
-                }
+                return Redirect(url.ToString());
+            }
+        }
+
+
+        // POST: /Search/Checkout
+        [HttpPost]
+        public ActionResult Checkout(string FirstName,
+                                     string LastName,
+                                     bool? partial,
+                                     string toAction,
+                                     string actionLabel,
+                                     string actionLabelClass)
+        {
+            // Get search matches
+            var tmp = db.Checkouts.Where(b => b.Borrower.FirstName.Contains(FirstName)).Union(
+                        db.Checkouts.Where(b => b.Borrower.LastName.Contains(LastName)));
+            var ids = db.Checkouts.Where(b => b.Status == LibraryAdmin2.Models.Checkout.CheckoutStatus.Out)
+                                  .Intersect(tmp)
+                                  .Select(a => a.Id)
+                                  .ToArray();
+
+            // Show results
+            if (ids.Count() == 0)
+                // No match
+                if (partial == true)
+                    return PartialView("NoResultsFound");
+                else
+                    return View("NoResultsFound");
+            else
+            {
+                // Match found
+                // Redirect to target List action with relevant URL params
+                UrlBuilder url = new UrlBuilder(this, "List", "Checkout");
+                if (partial == true)
+                    url.AppendParam("partial", true);
+                if (toAction != null)
+                    url.AppendParam("toAction", toAction);
+                if (actionLabel != null)
+                    url.AppendParam("actionLabel", actionLabel);
+                if (actionLabelClass != null)
+                    url.AppendParam("actionLabelClass", actionLabelClass);
+                for (var i = 0; i < ids.Length; i++)
+                    url.AppendParam("ids", ids[i]);
                 return Redirect(url.ToString());
             }
         }

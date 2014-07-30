@@ -48,7 +48,7 @@
         </td>
         <td>
             @Html.ActionLink("View Details", "ReviewCheckoutRequest", new { id = item.Id }) |
-            @Html.ActionLink("Reject", "RejectCheckoutRequest", new { id=item.Id })
+            @Html.ActionLink("Reject", "Reject", new { RequestId = item.Id })
         </td>
     </tr>
 }

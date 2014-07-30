@@ -29,7 +29,8 @@ namespace LibraryAdmin2.Controllers
             var book = db.Books.Find(id);
             if (book == null)
                 return HttpNotFound();
-
+            if (book.AvailableCopies < 1)
+                return View("RequestNoCopiesAvailable");
             return View(book);
         }
 
@@ -43,7 +44,7 @@ namespace LibraryAdmin2.Controllers
             if (result == CheckoutRequest.CreateRequestResult.Success)
                 return View("RequestSuccess");
             else
-                return View("RequestNoCopiesAvailable");
+                return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
 
 
@@ -129,6 +130,57 @@ namespace LibraryAdmin2.Controllers
             ViewBag.BookId = new SelectList(db.Books, "Id", "Title", checkout.BookId);
             ViewBag.PolicyId = new SelectList(db.Policies, "Id", "Name", checkout.PolicyId);
             return View(checkout);
+        }
+
+        // GET: /Borrower/List
+        // Prints out a list of authors with an action link that directs to
+        // another action with the Id of the selected author.
+        // Optionally lists only items specified in ids.
+
+        public ActionResult List(string toAction,
+                                 string actionLabel,
+                                 int[] ids,
+                                 string actionLabelClass,
+                                 bool? partial)
+        {
+            if (toAction != null)
+            {
+                ViewBag.ToAction = toAction;
+
+                if (actionLabel != null)
+                    ViewBag.ActionLabel = actionLabel;
+                else
+                    ViewBag.ActionLabel = "Select";
+
+                if (actionLabelClass != null)
+                    ViewBag.ActionLabelClass = actionLabelClass;
+
+            }
+
+            if (ids != null)
+            {
+                // List specified subset 
+                List<Checkout> checkoutsToList = db.Checkouts.Where(a => ids.Contains(a.Id))
+                                                       .ToList();
+                if (partial == true)
+                    return PartialView(checkoutsToList);
+                else
+                    return View(checkoutsToList);
+            }
+            else
+            {
+                // List everything
+                var allCheckouts = db.Checkouts.ToList();
+                if (allCheckouts != null)
+                {
+                    if (partial == true)
+                        return PartialView(allCheckouts);
+                    else
+                        return View(allCheckouts);
+                }
+                else
+                    return View();
+            }
         }
 
         protected override void Dispose(bool disposing)

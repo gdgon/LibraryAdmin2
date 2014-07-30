@@ -168,7 +168,6 @@
     <Compile Include="Controllers\BorrowerController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LogEventsController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -183,7 +182,6 @@
     <Compile Include="Models\Borrower.cs" />
     <Compile Include="Models\Checkout.cs" />
     <Compile Include="Models\CheckoutRequest.cs" />
-    <Compile Include="Models\LogEvent.cs" />
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryAdmin2Db.cs" />
@@ -192,6 +190,7 @@
     <Compile Include="Utils.cs" />
     <Compile Include="Utils\UrlBuilder.cs" />
     <Compile Include="ViewModels\NameViewModel.cs" />
+    <Compile Include="ViewModels\RequestReviewViewModel.cs" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -300,12 +299,11 @@
     <Content Include="Views\Shared\DisplayTemplates\Book.cshtml" />
     <Content Include="Views\Search\Borrower.cshtml" />
     <Content Include="Views\Borrower\List.cshtml" />
-    <Content Include="Views\LogEvents\Create.cshtml" />
-    <Content Include="Views\LogEvents\Delete.cshtml" />
-    <Content Include="Views\LogEvents\Details.cshtml" />
-    <Content Include="Views\LogEvents\Edit.cshtml" />
-    <Content Include="Views\LogEvents\Index.cshtml" />
-    <Content Include="Views\LogEvents\List.cshtml" />
+    <Content Include="Views\Admin\Approve.cshtml" />
+    <Content Include="Views\Admin\Reject.cshtml" />
+    <Content Include="Views\Admin\Return.cshtml" />
+    <Content Include="Views\Checkout\List.cshtml" />
+    <Content Include="Views\Admin\Returned.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>

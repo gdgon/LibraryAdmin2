@@ -20,7 +20,8 @@ namespace LibraryAdmin2.Models
             checkout.CheckoutDate = DateTime.Now;
             checkout.Status = CheckoutStatus.Out;
             checkout.DueDate = CalculateDueDate(policy);
-            db.Entry(checkout).State = EntityState.Modified;
+            checkout.Borrower = borrower;
+            db.Checkouts.Add(checkout);
             db.SaveChanges();
             new LogEvent("New (CheckoutId:" + checkout.Id + ") by (BorrowerId:" + borrower.Id + ") \"" + borrower.Name + "\" for (BookId:" + request.Book.Id + ") \"" + request.Book.Title + "\" with  (PolicyId:" + policy.Id + ") \"" + policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
         }
@@ -43,11 +44,11 @@ namespace LibraryAdmin2.Models
             Void            
         }
 
-        public static void Return(Checkout checkout, LibraryAdmin2Db db)
+        public void Return(LibraryAdmin2Db db)
         {
-            checkout.Book.AvailableCopies += 1;
-            checkout.Status = CheckoutStatus.Returned;
-            db.Entry(checkout).State = EntityState.Modified;
+            Book.AvailableCopies += 1;
+            Status = CheckoutStatus.Returned;
+            db.Entry(this).State = EntityState.Modified;
             db.SaveChanges();
             new LogEvent("Returned (CheckoutId:" + checkout.Id + ") by (BorrowerId:" + checkout.Borrower.Id + ") \"" + checkout.Borrower.Name + "\" for (BookId:" + checkout.Book.Id + ") \"" + checkout.Book.Title + "\" with  " + checkout.Policy.Name + "\".", LogEvent.EventTypes.CheckoutNew, db);
         }

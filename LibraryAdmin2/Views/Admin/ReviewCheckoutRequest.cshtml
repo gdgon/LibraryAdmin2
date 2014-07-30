@@ -1,9 +1,10 @@
 ﻿@model LibraryAdmin2.Models.CheckoutRequest
 
+@{
+    ViewBag.Title = "Review Checkout Request";
+}
 @Scripts.Render("~/bundles/jquery")
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-@Scripts.Render("~/bundles/jqueryui")
-
+@Scripts.Render("~/bundles/jqueryajax")
 <h2>View1</h2>
 
 <div>
@@ -16,22 +17,6 @@
 
         <dd>
             @Html.DisplayFor(model => model.Book)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
         </dd>
 
         <dt>
@@ -50,42 +35,82 @@
             @Html.DisplayFor(model => model.LastName)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
     </dl>
-
-    @Html.Label("Borrower's on Record")
-    @Html.Hidden("UserId", (int?)ViewBag.UserId)
-    @Html.TextBox("UserName", (string)ViewBag.UserName, null, new { @readonly = "readonly" })
-    <br />
-    <a class="btn-user-search">Search for User</a>
-    <div id="search-form">
-        @using (Ajax.BeginForm("Borrower",
-                               "Search",
-                               new AjaxOptions {
-                                   HttpMethod = "POST",
-                                   InsertionMode = InsertionMode.Replace,
-                                   UpdateTargetId = "searchResults"
-                                }))
-        {
-            @Html.Label("First Name");
-            @Html.TextBox("FirstName");<br />
-            @Html.Label("Last Name");
-            @Html.TextBox("LastName");
-            <input type="submit" value="Search" class="btn btn-default"/>
-        }
-        <div id="searchResults"></div>
-    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
 
+@using (@Html.BeginForm("Approve", "Admin", FormMethod.Post, new { id = "Approve" }))
+{
+    @:Policy
+    @Html.DropDownList("PolicyId", String.Empty)
+    <br />
+    @:Borrower:
+    @Html.Hidden("RequestId", Model.Id)
+    if (ViewBag.Borrower != null)
+    {
+        @Html.Hidden("BorrowerId", (int)ViewBag.Borrower.Id)
+        @Html.TextBox("BorrowerName", (string)ViewBag.Borrower.Name)
+    }
+    else
+    {
+        @Html.Hidden("BorrowerId")
+        @Html.TextBox("BorrowerName", null, new { @readonly = "readonly" })
+    }
+    <br />
+    <input type="submit" value="Submit" />
+}
+
+
+Search
+@using (@Ajax.BeginForm("Borrower", "Search", null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            UpdateTargetId = "searchResults",
+                            InsertionMode = InsertionMode.Replace
+                        },
+                        new { id = "userSearch" }))
+{
+    @Html.Hidden("toAction", " ")
+    @Html.Hidden("actionLabel", "Select")
+    @Html.Hidden("actionLabelClass", "selectBorrower")
+    @Html.Hidden("partial", true)
+
+    @Html.TextBox("FirstName") <br />
+    @Html.TextBox("LastName")<br />
+    <input type="submit" value="Search" form="userSearch" />
+}
+
+<div id="searchResults">
+    Accept
+    <br />
+    Reject <br />
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</div>
 <script>
-    $(function () {
-        $("#search-form").hide();
-        $(".btn-user-search").click(function (e) {
+    $(document).on("click", ".selectBorrower",
+        function (e) {
             e.preventDefault();
-            $("#search-form").show();
-        })
-    })
+            id = $(this).closest("tr").find(".id").text();
+            name = $(this).closest("tr").find(".name").text().trim();
+            $("#BorrowerId").val(id);
+            $("#BorrowerName").val(name);
+        });
 </script>
