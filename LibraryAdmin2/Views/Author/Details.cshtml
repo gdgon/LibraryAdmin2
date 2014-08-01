@@ -46,10 +46,14 @@
     {
         <label>Books by @Model.Name</label>
         Html.RenderAction("List", "Book", new { ids = ViewBag.BookIds, partial = true });
-        
+
     }
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |@Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @if (Request.IsAuthenticated)
+    {
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) @:|
+        @Html.ActionLink("Back to List", "Index")
+    }
 </p>

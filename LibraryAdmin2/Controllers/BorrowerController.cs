@@ -162,6 +162,13 @@ namespace LibraryAdmin2.Controllers
                     return View();
             }
         }
+
+        public ActionResult TopBorrower()
+        {
+            var topBorrower = db.LogEvents.Where(l => l.Event == LogEvent.EventTypes.CheckoutNew).Count();
+            return View();
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
