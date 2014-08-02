@@ -13,5 +13,8 @@ namespace LibraryAdmin2.ViewModels
         public string Title { get; set; }
         public string SearchType { get; set; }
         public bool? Partial { get; set; }
+        public string ListLabel { get; set; }
+        public int ListLabelClass { get; set; }
+
     }
 }
