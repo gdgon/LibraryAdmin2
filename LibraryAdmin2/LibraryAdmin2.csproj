@@ -187,6 +187,7 @@
     <Compile Include="Models\Policy.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LibraryAdmin2Db.cs" />
+    <Compile Include="Models\SearchExtensionMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils.cs" />
