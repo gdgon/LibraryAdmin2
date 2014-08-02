@@ -41,13 +41,9 @@ namespace LibraryAdmin2.Controllers
 
         // POST: /Search/Author
         [HttpPost]
-        public ActionResult Author(NameViewModel name)
+        public ActionResult Author(SearchViewModel searchParams)
         {
-            // Get search matches
-            int[] ids = db.Authors.Where(a => a.FirstName.Contains(name.FirstName)).Union(
-                        db.Authors.Where(a => a.LastName.Contains(name.LastName)))
-                                    .Select(a => a.Id)
-                                    .ToArray();
+            int[] ids = db.Authors.Search(searchParams);
 
             // Show results
             if (ids.Count() == 0)
@@ -82,11 +78,7 @@ namespace LibraryAdmin2.Controllers
         [HttpPost]
         public ActionResult Book(string Title, string Isbn)
         {
-            // Get search matches
-            int[] ids = db.Books.Where(a => a.Title.Contains(Title)).Intersect(
-                        db.Books.Where(a => a.Isbn.Contains(Isbn)))
-                                .Select(a => a.Id)
-                                .ToArray();
+            int[] ids = db.Books.Search(searchParams);
 
             // Show results
             if (ids.Count() == 0)
@@ -126,11 +118,7 @@ namespace LibraryAdmin2.Controllers
                                      string actionLabel,
                                      string actionLabelClass)
         {
-            // Get search matches
-            int[] ids = db.Borrowers.Where(b => b.FirstName.Contains(FirstName)).Union(
-                        db.Borrowers.Where(b => b.LastName.Contains(LastName)))
-                                    .Select(a => a.Id)
-                                    .ToArray();
+            int[] ids = db.Borrowers.Search(searchParams);
 
             // Show results
             if (ids.Count() == 0)
@@ -168,13 +156,7 @@ namespace LibraryAdmin2.Controllers
                                      string actionLabel,
                                      string actionLabelClass)
         {
-            // Get search matches
-            var tmp = db.Checkouts.Where(b => b.Borrower.FirstName.Contains(FirstName)).Union(
-                        db.Checkouts.Where(b => b.Borrower.LastName.Contains(LastName)));
-            var ids = db.Checkouts.Where(b => b.Status == LibraryAdmin2.Models.Checkout.CheckoutStatus.Out)
-                                  .Intersect(tmp)
-                                  .Select(a => a.Id)
-                                  .ToArray();
+            int[] ids = db.Checkouts.Search(searchParams);
 
             // Show results
             if (ids.Count() == 0)
