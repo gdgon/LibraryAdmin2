@@ -9,10 +9,10 @@ namespace LibraryAdmin2.Models
 {
     public static class SearchExtensionMethods
     {
-        public static int[] Search(this DbSet<Borrower> borrowerParam, SearchViewModel searchParams, LibraryAdmin2Db db)
+        public static int[] Search(this DbSet<Borrower> borrowerDbSet, SearchViewModel searchParams)
         {
-            int[] ids = db.Borrowers.Where(b => b.FirstName.Contains(searchParams.FirstName)).Union(
-            db.Borrowers.Where(b => b.LastName.Contains(searchParams.LastName)))
+            int[] ids = borrowerDbSet.Where(b => b.FirstName.Contains(searchParams.FirstName)).Union(
+            borrowerDbSet.Where(b => b.LastName.Contains(searchParams.LastName)))
                         .Select(a => a.Id)
                         .ToArray();
             return ids;
