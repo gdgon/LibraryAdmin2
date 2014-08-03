@@ -176,7 +176,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="LinqExtensions.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\ApplicationDbContext.cs" />
+    <Compile Include="Migrations\LibraryAdmin2Db.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />

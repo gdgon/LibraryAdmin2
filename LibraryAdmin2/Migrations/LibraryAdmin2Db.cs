@@ -1,13 +1,13 @@
-namespace LibraryAdmin2.Migrations
+namespace LibraryAdmin2.Migrations.LibraryAdminDb
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LibraryAdmin2.Models.LibraryAdmin2Db>
+    internal sealed class LibraryAdmin2Db : DbMigrationsConfiguration<LibraryAdmin2.Models.LibraryAdmin2Db>
     {
-        public Configuration()
+        public LibraryAdmin2Db()
         {
             AutomaticMigrationsEnabled = true;
         }
