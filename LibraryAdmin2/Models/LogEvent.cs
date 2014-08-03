@@ -98,9 +98,9 @@ namespace LibraryAdmin2.Models
             Write(new LogEvent { Event = EventTypes.RequestNew, RequestId = RequestIdParam }, db);
         }
 
-        public static void RequestApproved(int RequestIdParam, int BorrowerIdParam, int PolicyIdParam, LibraryAdmin2Db db)
+        public static void RequestApproved(int RequestIdParam, int BookIdParam, int BorrowerIdParam, int PolicyIdParam, LibraryAdmin2Db db)
         {
-            Write(new LogEvent { Event = EventTypes.RequestApproved, RequestId = RequestIdParam, BorrowerId = BorrowerIdParam, PolicyId = PolicyIdParam }, db);
+            Write(new LogEvent { Event = EventTypes.RequestApproved, RequestId = RequestIdParam, BookId = BookIdParam, BorrowerId = BorrowerIdParam, PolicyId = PolicyIdParam }, db);
         }
 
         public static void RequestRejected(int RequestIdParam, LibraryAdmin2Db db)

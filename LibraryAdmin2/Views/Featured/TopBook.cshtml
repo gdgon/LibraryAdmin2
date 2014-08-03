@@ -9,7 +9,7 @@
     <div style="float:left; min-width: 100px">
         <p>@Html.ActionLink(@Model.Title, "Details", "Book", new { id = Model.Id }, null)</p>
         <p>
-            by
+            By:
 
             @foreach (var author in Model.Authors)
             {

@@ -65,7 +65,8 @@ namespace LibraryAdmin2.Controllers
             var request = db.CheckoutRequests.Find(RequestId);
             var policy = db.Policies.Find(PolicyId);
             var borrower = db.Borrowers.Find(BorrowerId);
-            request.Approve(borrower, policy, db);
+            var book = request.Book;
+            request.Approve(book, borrower, policy, db);
 
             return View();
         }

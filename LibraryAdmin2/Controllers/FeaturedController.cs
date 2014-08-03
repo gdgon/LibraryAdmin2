@@ -37,6 +37,40 @@ namespace LibraryAdmin2.Controllers
             return PartialView(topBook);
         }
 
+        public ActionResult TopAuthor()
+        {
+            /*1: Get all authors
+             *   for eachauthor, get all books
+             *     for each book, count checkouts, add to author counter
+             * 
+             * */
+            Author topAuthor = null;
+            int topCount = 0;
+
+            var authors = db.Authors.ToList();
+            foreach (var author in authors)
+            {
+                int count = 0;
+                var books = author.Books;
+
+                foreach (var book in books)
+                {
+                    count += db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
+                                         .Where(e => e.BookId == book.Id)
+                                         .Count();
+                }
+
+                if (count > topCount)
+                {
+                    topAuthor = author;
+                    topCount = count;
+                }
+            }
+
+            ViewBag.Num = topCount;
+            return PartialView(topAuthor);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

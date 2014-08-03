@@ -63,13 +63,13 @@ namespace LibraryAdmin2.Models
             LogEvent.RequestRejected(Id, db);
         }
 
-        public void Approve(Borrower borrower, Policy policy, LibraryAdmin2Db db)
+        public void Approve(Book book, Borrower borrower, Policy policy, LibraryAdmin2Db db)
         {
             var checkout = new Checkout(this, borrower, policy, db);
             db.Entry(this).State = EntityState.Modified;
             Status = RequestStatus.Approved;
             db.SaveChanges();
-            LogEvent.RequestApproved(Id, borrower.Id, policy.Id, db);
+            LogEvent.RequestApproved(Id, book.Id, borrower.Id, policy.Id, db);
         }
     }
 }
