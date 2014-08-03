@@ -12,17 +12,6 @@ using System.Web.Routing;
 
 namespace LibraryAdmin2.Controllers
 {
-    // Search(string Action, string[] Fields, bool partial?)
-    //  -> if partial, ViewBag.partial = true; PartialView()
-    //  -> on View: show form with fields
-    //      -> on submit
-    //          -> flatten Fields[], partial and submit to Action
-    // Action(bool? partial, string Field1, string Field2 ...)
-    //  -> if partial, PartialView
-    //  -> get result Ids
-    //  -> build URL string: model List() action, append partial, append Ids
-    //  -> redirect to URL
-
     public class SearchController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();
@@ -35,18 +24,27 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Search/Search
-        public ActionResult Search()
+        public ActionResult Search(bool? Book, bool? Author, bool? Checkout)
         {
-            ViewBag.SearchType = new SelectList(
-                new List<SelectListItem>
-                {
-                    new SelectListItem { Selected = false, Text = "Book", Value = "Book" },
-                    new SelectListItem { Selected = false, Text = "Author", Value = "Author" },
-                    new SelectListItem { Selected = false, Text = "Checkout", Value = "Checkout"}
-                }, "Value", "Text");
+            var list = new List<SelectListItem>();
+
+            if (Book == true)
+                list.Add(new SelectListItem { Value = "Book" });
+            if (Book == true)
+                list.Add(new SelectListItem { Value = "Author" });
+            if (Book == true)
+                list.Add(new SelectListItem { Value = "Checkout" });
+            if (Book == null && Author == null && Checkout == null)
+            {
+                // If no parameters are given
+                list.Add(new SelectListItem { Value = "Book" });
+                list.Add(new SelectListItem { Value = "Author" });
+            }
+
+            ViewBag.SearchType = new SelectList(list, "Value", "Value");
             return View();
         }
-            
+
         // POST: /Search/Search
         [HttpPost]
         public ActionResult Search(SearchViewModel searchParams)
