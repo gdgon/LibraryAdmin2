@@ -308,6 +308,12 @@
     <Content Include="Views\Admin\Return.cshtml" />
     <Content Include="Views\Checkout\List.cshtml" />
     <Content Include="Views\Admin\Returned.cshtml" />
+    <Content Include="Views\LogEvents\Create.cshtml" />
+    <Content Include="Views\LogEvents\Delete.cshtml" />
+    <Content Include="Views\LogEvents\Details.cshtml" />
+    <Content Include="Views\LogEvents\Edit.cshtml" />
+    <Content Include="Views\LogEvents\Index.cshtml" />
+    <Content Include="Views\LogEvents\List.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>
