@@ -76,7 +76,7 @@
 
 
 Search
-@using (@Ajax.BeginForm("Borrower", "Search", null,
+@using (@Ajax.BeginForm("Search", "Search", new { Partial = true, SearchType = "Borrower" },
                         new AjaxOptions
                         {
                             HttpMethod = "POST",

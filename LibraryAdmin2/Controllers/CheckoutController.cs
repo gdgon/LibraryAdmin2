@@ -143,7 +143,7 @@ namespace LibraryAdmin2.Controllers
                                  string actionLabelClass,
                                  bool? Partial)
         {
-            if (toAction != null)
+            if (actionLabel != null)
             {
                 ViewBag.ToAction = toAction;
 

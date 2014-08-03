@@ -28,7 +28,7 @@
 
 <h4>Search for user:</h4>
 
-@using (@Ajax.BeginForm("Checkout", "Search", null,
+@using (@Ajax.BeginForm("Search", "Search", new { Partial = true, SearchType = "Checkout" },
                         new AjaxOptions
                         {
                             HttpMethod = "POST",

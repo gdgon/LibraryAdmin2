@@ -26,6 +26,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Search/Search
         public ActionResult Search(bool? Book,
                                    bool? Author,
+                                   bool? Borrower,
                                    bool? Checkout,
                                    bool? Partial)
         {
@@ -35,6 +36,8 @@ namespace LibraryAdmin2.Controllers
                 list.Add(new SelectListItem { Value = "Book" });
             if (Book == true)
                 list.Add(new SelectListItem { Value = "Author" });
+            if (Borrower == true)
+                list.Add(new SelectListItem { Value = "Borrower" });
             if (Book == true)
                 list.Add(new SelectListItem { Value = "Checkout" });
             if (Book == null && Author == null && Checkout == null)
@@ -53,7 +56,10 @@ namespace LibraryAdmin2.Controllers
 
         // POST: /Search/Search
         [HttpPost]
-        public ActionResult Search(SearchViewModel searchParams)
+        public ActionResult Search(SearchViewModel searchParams,
+                                   string toAction,
+                                   string actionLabel,
+                                   string actionLabelClass)
         {
             int[] ids;
             switch (searchParams.SearchType)
@@ -79,7 +85,7 @@ namespace LibraryAdmin2.Controllers
                 else
                     return View("NoResultsFound");
             else if (ids.Length > 0)
-                return DispatchToList(ids, searchParams.SearchType, searchParams.Partial);
+                return DispatchToList(ids, searchParams.SearchType, searchParams.Partial, toAction, actionLabel, actionLabelClass);
 
             if (searchParams.Partial == true)
                 return PartialView(searchParams);
@@ -87,7 +93,10 @@ namespace LibraryAdmin2.Controllers
                 return View(searchParams);
         }
 
-        private ActionResult DispatchToList(int[] ids, string searchType, bool? Partial)
+        private ActionResult DispatchToList(int[] ids, string searchType, bool? Partial,
+                                   string toAction,
+                                   string actionLabel,
+                                   string actionLabelClass)
         {
             if (ids == null || searchType == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -97,12 +106,12 @@ namespace LibraryAdmin2.Controllers
                 //url.AppendParam("actionLabelClass", "btn-select");
                 if (Partial == true)
                     url.AppendParam("Partial", true);
-                //if (toAction != null)
-                //    url.AppendParam("toAction", toAction);
-                //if (actionLabel != null)
-                //    url.AppendParam("actionLabel", actionLabel);
-                //if (actionLabelClass != null)
-                //    url.AppendParam("actionLabelClass", actionLabelClass);
+                if (toAction != null)
+                    url.AppendParam("toAction", toAction);
+                if (actionLabel != null)
+                    url.AppendParam("actionLabel", actionLabel);
+                if (actionLabelClass != null)
+                    url.AppendParam("actionLabelClass", actionLabelClass);
                 for (var i = 0; i < ids.Length; i++)
                 {
                     url.AppendParam("ids", ids[i]);
