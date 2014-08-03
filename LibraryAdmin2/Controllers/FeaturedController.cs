@@ -13,27 +13,34 @@ namespace LibraryAdmin2.Controllers
 
         public ActionResult TopBorrower()
         {
-            var topGroup = db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
-                                 .GroupBy(e => e.BorrowerId)
-                                 .OrderByDescending(e => e.Count())
-                                 .First();
-            var id = topGroup.First().BorrowerId;
+            var grouped = db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
+                                      .GroupBy(e => e.BorrowerId)
+                                      .OrderByDescending(e => e.Count());
 
-            ViewBag.Name = db.Borrowers.Find(id).Name;
-            ViewBag.Num = topGroup.Count();
+            if (grouped.Count() > 0)
+            {
+                var topGroup = grouped.First();
+                var id = topGroup.First().BorrowerId;
+
+                ViewBag.Name = db.Borrowers.Find(id).Name;
+                ViewBag.Num = topGroup.Count();
+            }
             return PartialView();
         }
 
         public ActionResult TopBook()
         {
-            var topGroup = db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
-                                 .GroupBy(e => e.BookId)
-                                 .OrderByDescending(e => e.Count())
-                                 .First();
-            var id = topGroup.First().BorrowerId;
-
-            var topBook = db.Books.Find(id);
-            ViewBag.Num = topGroup.Count();
+            Book topBook = null;
+            var grouped = db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
+                                     .GroupBy(e => e.BookId)
+                                     .OrderByDescending(e => e.Count());
+            if (grouped.Count() > 0)
+            {
+                var topGroup = grouped.First();
+                var id = topGroup.First().BorrowerId;
+                topBook = db.Books.Find(id);
+                ViewBag.Num = topGroup.Count();
+            }
             return PartialView(topBook);
         }
 
@@ -48,22 +55,25 @@ namespace LibraryAdmin2.Controllers
             int topCount = 0;
 
             var authors = db.Authors.ToList();
-            foreach (var author in authors)
+            if (authors.Count() > 0)
             {
-                int count = 0;
-                var books = author.Books;
-
-                foreach (var book in books)
+                foreach (var author in authors)
                 {
-                    count += db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
-                                         .Where(e => e.BookId == book.Id)
-                                         .Count();
-                }
+                    int count = 0;
+                    var books = author.Books;
 
-                if (count > topCount)
-                {
-                    topAuthor = author;
-                    topCount = count;
+                    foreach (var book in books)
+                    {
+                        count += db.LogEvents.Where(e => e.Event == LogEvent.EventTypes.RequestApproved)
+                                             .Where(e => e.BookId == book.Id)
+                                             .Count();
+                    }
+
+                    if (count > topCount)
+                    {
+                        topAuthor = author;
+                        topCount = count;
+                    }
                 }
             }
 

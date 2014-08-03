@@ -1,10 +1,13 @@
-﻿<div>
-    <h4>Top Borrower</h4>
-    <hr />
-    <dl>
-        <dd>
-            @ViewBag.Name <br /><br />
-            <em>@ViewBag.Num books borrowed</em>
-        </dd>
-    </dl>
-</div>
+﻿@if (ViewBag.Name != null)
+{
+    <div>
+        <h4>Top Borrower</h4>
+        <hr />
+        <dl>
+            <dd>
+                @ViewBag.Name <br /><br />
+                <em>@ViewBag.Num books borrowed</em>
+            </dd>
+        </dl>
+    </div>
+}
