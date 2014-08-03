@@ -168,7 +168,7 @@
     <Compile Include="Controllers\BorrowerController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LogEventsController.cs" />
+    <Compile Include="Controllers\LogEventController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Global.asax.cs">
@@ -308,12 +308,12 @@
     <Content Include="Views\Admin\Return.cshtml" />
     <Content Include="Views\Checkout\List.cshtml" />
     <Content Include="Views\Admin\Returned.cshtml" />
-    <Content Include="Views\LogEvents\Create.cshtml" />
-    <Content Include="Views\LogEvents\Delete.cshtml" />
-    <Content Include="Views\LogEvents\Details.cshtml" />
-    <Content Include="Views\LogEvents\Edit.cshtml" />
-    <Content Include="Views\LogEvents\Index.cshtml" />
-    <Content Include="Views\LogEvents\List.cshtml" />
+    <Content Include="Views\LogEvent\Create.cshtml" />
+    <Content Include="Views\LogEvent\Delete.cshtml" />
+    <Content Include="Views\LogEvent\Details.cshtml" />
+    <Content Include="Views\LogEvent\Edit.cshtml" />
+    <Content Include="Views\LogEvent\Index.cshtml" />
+    <Content Include="Views\LogEvent\List.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>

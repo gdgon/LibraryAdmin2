@@ -10,7 +10,7 @@ using LibraryAdmin2.Models;
 
 namespace LibraryAdmin2.Controllers
 {
-    public class LogEventsController : Controller
+    public class LogEventController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();
 

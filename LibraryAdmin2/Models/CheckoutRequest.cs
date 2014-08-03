@@ -72,7 +72,7 @@ namespace LibraryAdmin2.Models
             Status = RequestStatus.Approved;
             db.SaveChanges();
             new LogEvent("APPROVED checkout request (RequestId:"
-     + Id + "for (BookId:" + Book.Id + ") \"" + Book.Title + "\" with (CheckoutId:" + checkout.Id + ").", LogEvent.EventTypes.RequestRejected, db);
+     + Id + "for (BookId:" + Book.Id + ") \"" + Book.Title + "\" with (CheckoutId:" + checkout.Id + ").", LogEvent.EventTypes.RequestApproved, db);
         }
     }
 }
