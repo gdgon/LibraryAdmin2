@@ -46,6 +46,7 @@ namespace LibraryAdmin2.Controllers
                                  string actionLabelClass,
                                  bool partial = false)
         {
+            ViewBag.Db = db;
             if (toAction != null)
             {
                 ViewBag.ToAction = toAction;

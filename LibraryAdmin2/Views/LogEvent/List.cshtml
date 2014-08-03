@@ -4,58 +4,103 @@
     ViewBag.Title = "List";
 }
 
-<h2>List</h2>
+<h3>Logs</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        @if (ViewBag.ToAction != null)
-        {
-            @:
-            <th></th>
-        }
-        @*<th>
-            @Html.DisplayNameFor(model => model.Message)
-        </th>*@
-        <th>
-            @Html.DisplayNameFor(model => model.Event)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+@if (Model.Count() == 0)
+{
+    <p>No logs found.</p>
+}
+else
+{
+    <table class="table">
         <tr>
             @if (ViewBag.ToAction != null)
             {
-                <text>
-                    <td>
-                        @Html.ActionLink((string)ViewBag.ActionLabel, (string)ViewBag.ToAction, new { id = item.Id }, new { @class = ViewBag.ActionLabelClass })
-                        <p style="display:none" class="id">@item.Id</p>
-                        @*@Html.HiddenFor(modelItem => item.Id, new { @class = "Id"})*@
-                    </td>
-                </text>
+                @:
+                <th></th>
             }
-        @*<td>
-            @Html.DisplayFor(modelItem => item.Message)
-        </td>*@
-        <td>
-            @Html.DisplayFor(modelItem => item.Event)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Date)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-        </td>
-    </tr>
-    }
+            <th>
+                @Html.DisplayNameFor(model => model.Event)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BorrowerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuthorId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CheckoutId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RequestId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PolicyId)
+            </th>
+            <th></th>
+        </tr>
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (ViewBag.ToAction != null)
+                {
+                    <text>
+                        <td>
+                            @Html.ActionLink((string)ViewBag.ActionLabel, (string)ViewBag.ToAction, new { id = item.Id }, new { @class = ViewBag.ActionLabelClass })
+                            <p style="display:none" class="id">@item.Id</p>
+                        </td>
+                    </text>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Event)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @if (item.BorrowerId > 0)
+                    {
+                        @Html.ActionLink(item.BorrowerId.ToString(), "Details", "Borrower", new { id = item.BorrowerId }, null)
+                    }
+                </td>
+                <td>
+                    @if (item.BookId > 0)
+                    {
+                        @Html.ActionLink(item.BookId.ToString(), "Details", "Book", new { id = item.BookId }, null)
+                    }
+                </td>
+                <td>
+                    @if (item.AuthorId > 0)
+                    {
+                        @Html.ActionLink(item.AuthorId.ToString(), "Details", "Author", new { id = item.AuthorId }, null)
+                    }
+                </td>
+                <td>
+                    @if (item.CheckoutId > 0)
+                    {
+                        @Html.ActionLink(item.CheckoutId.ToString(), "Details", "Checkout", new { id = item.CheckoutId }, null)
+                    }
+                </td>
+                <td>
+                    @if (item.RequestId > 0)
+                    {
+                        @Html.DisplayFor(model => item.RequestId)
+                    }
+                </td>
+                <td>
+                    @if (item.PolicyId > 0)
+                    {
+                        @Html.ActionLink(item.PolicyId.ToString(), "Details", "Policy", new { id = item.PolicyId }, null)
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}
