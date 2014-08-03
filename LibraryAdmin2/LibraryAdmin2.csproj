@@ -167,6 +167,7 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BorrowerController.cs" />
     <Compile Include="Controllers\CheckoutController.cs" />
+    <Compile Include="Controllers\FeaturedController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogEventController.cs" />
     <Compile Include="Controllers\PolicyController.cs" />
@@ -314,6 +315,8 @@
     <Content Include="Views\LogEvent\Edit.cshtml" />
     <Content Include="Views\LogEvent\Index.cshtml" />
     <Content Include="Views\LogEvent\List.cshtml" />
+    <Content Include="Views\Featured\TopBorrower.cshtml" />
+    <Content Include="Views\Featured\TopBook.cshtml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>

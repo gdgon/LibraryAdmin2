@@ -1,0 +1,23 @@
+﻿@model LibraryAdmin2.Models.Book
+
+<div>
+    <h4>Most Borrowed Book</h4>
+    <hr />
+    <div style="float:left; width: 100px; margin-right: 10px">
+        <img src="@Model.ImageUrl" class="picture" />
+    </div>
+    <div style="float:left; min-width: 100px">
+        <p>@Html.ActionLink(@Model.Title, "Details", "Book", new { id = Model.Id }, null)</p>
+        <p>
+            by
+
+            @foreach (var author in Model.Authors)
+            {
+                @:- @Html.ActionLink(author.Name, "Details", "Author", new { id = author.Id }, null)
+            }
+        </p>
+        <p>@Model.ShortDescription</p>
+
+        <em>@ViewBag.Num times borrowed</em>
+    </div>
+</div>
