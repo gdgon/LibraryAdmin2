@@ -43,9 +43,12 @@ namespace LibraryAdmin2.Controllers
                 list.Add(new SelectListItem { Value = "Book" });
                 list.Add(new SelectListItem { Value = "Author" });
             }
-
             ViewBag.SearchType = new SelectList(list, "Value", "Value");
-            return View();
+
+            if (Partial == true)
+                return PartialView();
+            else
+                return View();
         }
 
         // POST: /Search/Search
@@ -80,7 +83,7 @@ namespace LibraryAdmin2.Controllers
 
             if (searchParams.Partial == true)
                 return PartialView(searchParams);
-            else 
+            else
                 return View(searchParams);
         }
 

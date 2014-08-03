@@ -6,10 +6,10 @@
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
-<h2>Search</h2>
 <div id="searchForm">
     @using (Ajax.BeginForm("Search",
                             "Search",
+                            new { Partial = true },
                             new AjaxOptions
                             {
                                 HttpMethod = "POST",
@@ -23,7 +23,7 @@
                         @Html.HiddenFor(m => m.ListLabelClass)
                         <div class="form-group">
                             @Html.Label("Search for", new { @class = "control-label col-md-2" })
-                            <div class="col-md-10">                                @Html.DropDownList("SearchType", "(make selection)")
+                            <div class="col-md-10">                                @Html.DropDownList("SearchType")
                             </div>
                         </div>
             <div class="form-group">
@@ -60,11 +60,3 @@
 
 <div id="searchResults">
 </div>
-
-
-
-
-
-
-
-
