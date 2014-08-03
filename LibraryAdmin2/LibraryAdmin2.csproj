@@ -267,7 +267,7 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Views\Shared\EditorTemplates\TextArea.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Picture.cshtml" />
-    <Content Include="Views\Search\Author.cshtml" />
+    <Content Include="Views\Search\Search.cshtml" />
     <Content Include="Views\Search\NoResultsFound.cshtml" />
     <Content Include="Views\Book\Create.cshtml" />
     <Content Include="Views\Book\Delete.cshtml" />

@@ -37,9 +37,16 @@ namespace LibraryAdmin2.Controllers
         // GET: /Search/Search
         public ActionResult Search()
         {
+            ViewBag.SearchType = new SelectList(
+                new List<SelectListItem>
+                {
+                    new SelectListItem { Selected = false, Text = "Book", Value = "Book" },
+                    new SelectListItem { Selected = false, Text = "Author", Value = "Author" },
+                    new SelectListItem { Selected = false, Text = "Checkout", Value = "Checkout"}
+                }, "Value", "Text");
             return View();
         }
-
+            
         // POST: /Search/Search
         [HttpPost]
         public ActionResult Search(SearchViewModel searchParams)

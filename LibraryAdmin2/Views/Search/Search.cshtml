@@ -1,4 +1,4 @@
-﻿@model LibraryAdmin2.ViewModels.NameViewModel
+﻿@model LibraryAdmin2.ViewModels.SearchViewModel
 
 <link rel="stylesheet" type="text/css" href="~/Content/Site.css">
 <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
@@ -8,9 +8,7 @@
 
 <h2>Search</h2>
 <div id="searchForm">
-    <h4>Author</h4>
-    <hr />
-    @using (Ajax.BeginForm("Author",
+    @using (Ajax.BeginForm("Search",
                             "Search",
                             new AjaxOptions
                             {
@@ -20,16 +18,35 @@
                             }))
     {
         <div class="form-horizontal">
+            @Html.HiddenFor(m => m.Partial)
+            @Html.HiddenFor(m => m.ListLabel)
+                        @Html.HiddenFor(m => m.ListLabelClass)
+                        <div class="form-group">
+                            @Html.Label("Search for", new { @class = "control-label col-md-2" })
+                            <div class="col-md-10">                                @Html.DropDownList("SearchType", "(make selection)")
+                            </div>
+                        </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.FirstName, new { @class = "control-label col-md-2" })
+                @Html.Label("First Name", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.FirstName)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.LastName, new { @class = "control-label col-md-2" })
+                @Html.Label("Last Name", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.LastName)
+                </div>
+            </div><div class="form-group">
+                @Html.Label("Title", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.Title)
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("ISBN", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => m.Isbn)
                 </div>
             </div>
             <div class="form-group">
@@ -43,4 +60,11 @@
 
 <div id="searchResults">
 </div>
+
+
+
+
+
+
+
 
