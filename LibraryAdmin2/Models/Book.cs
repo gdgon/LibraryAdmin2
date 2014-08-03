@@ -33,7 +33,7 @@ namespace LibraryAdmin2.Models
         {
             db.Books.Add(book);
             db.SaveChanges();
-            new LogEvent("(BookId:" + book.Id + ") \"" + book.Title + "\" created.", LogEvent.EventTypes.BookCreate, db);
+            LogEvent.BookCreate(book.Id, db);
             return true;
         }
 
@@ -41,7 +41,7 @@ namespace LibraryAdmin2.Models
         {
             db.Entry(book).State = EntityState.Modified;
             db.SaveChanges();
-            new LogEvent("(BookId:" + book.Id + ") \"" + book.Title + "\"  properties edited.", LogEvent.EventTypes.BookEdit, db);
+            LogEvent.BookEdit(book.Id, db);
             return true;
         }
 
@@ -49,7 +49,7 @@ namespace LibraryAdmin2.Models
         {
             db.Books.Remove(book);
             db.SaveChanges();
-            new LogEvent("(BookId:" + book.Id + ") \"" + book.Title + "\"  properties edited.", LogEvent.EventTypes.BookDelete, db);
+            LogEvent.BookDelete(book.Id, db);
             return true;
         }
     }

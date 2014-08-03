@@ -36,7 +36,7 @@ namespace LibraryAdmin2.Models
             author.Name = author.FirstName + " " + author.LastName;
             db.Authors.Add(author);
             db.SaveChanges();
-            new LogEvent("(AuthorId:" + author.Id + ") \"" + author.Name + "\" created.", LogEvent.EventTypes.AuthorCreate, db);
+            LogEvent.AuthorCreate(author.Id,  db);
             return true;
         }
 
@@ -45,7 +45,7 @@ namespace LibraryAdmin2.Models
             author.Name = author.FirstName + " " + author.LastName;
             db.Entry(author).State = EntityState.Modified;
             db.SaveChanges();
-            new LogEvent("(AuthorId:" + author.Id + ") \"" + author.Name + "\" properties edited.", LogEvent.EventTypes.AuthorEdit, db);
+            LogEvent.AuthorEdit(author.Id, db);
             return true;
         }
 
@@ -53,7 +53,7 @@ namespace LibraryAdmin2.Models
         {
             db.Authors.Remove(author);
             db.SaveChanges();
-            new LogEvent("(AuthorId:" + author.Id + ") \"" + author.Name + "\" deleted.", LogEvent.EventTypes.AuthorDelete, db);
+            LogEvent.AuthorDelete(author.Id, db);
             return true;
         }
     }

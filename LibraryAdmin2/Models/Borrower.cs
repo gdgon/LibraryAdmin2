@@ -31,7 +31,7 @@ namespace LibraryAdmin2.Models
             borrower.Name = borrower.FirstName + " " + borrower.LastName;
             db.Borrowers.Add(borrower);
             db.SaveChanges();
-            new LogEvent("(BorrowerId:" + borrower.Id + ") \"" + borrower.Name + "\" created.", LogEvent.EventTypes.BorrowerCreate, db);
+            LogEvent.BorrowerCreate(borrower.Id, db);
             return true;
         }
 
@@ -40,7 +40,7 @@ namespace LibraryAdmin2.Models
             borrower.Name = borrower.FirstName + " " + borrower.LastName;
             db.Entry(borrower).State = EntityState.Modified;
             db.SaveChanges();
-            new LogEvent("(BorrowerId:" + borrower.Id + ") \"" + borrower.Name + "\" properties edited.", LogEvent.EventTypes.BorrowerEdit, db);
+            LogEvent.BorrowerEdit(borrower.Id, db);
             return true;
         }
 
@@ -48,7 +48,7 @@ namespace LibraryAdmin2.Models
         {
             db.Borrowers.Remove(borrower);
             db.SaveChanges();
-            new LogEvent("(BorrowerId:" + borrower.Id + ") \"" + borrower.Name + "\" deleted.", LogEvent.EventTypes.BorrowerDelete, db);
+            LogEvent.BorrowerDelete(borrower.Id, db);
             return true;
         }
     }
