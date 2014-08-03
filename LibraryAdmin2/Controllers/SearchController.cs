@@ -24,7 +24,10 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Search/Search
-        public ActionResult Search(bool? Book, bool? Author, bool? Checkout)
+        public ActionResult Search(bool? Book,
+                                   bool? Author,
+                                   bool? Checkout,
+                                   bool? Partial)
         {
             var list = new List<SelectListItem>();
 
@@ -68,14 +71,20 @@ namespace LibraryAdmin2.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             if (ids.Length == 0)
-                return View("NoResultsFound");
+                if (searchParams.Partial == true)
+                    return PartialView("NoResultsFound");
+                else
+                    return View("NoResultsFound");
             else if (ids.Length > 0)
                 return DispatchToList(ids, searchParams.SearchType, searchParams.Partial);
-            else
+
+            if (searchParams.Partial == true)
+                return PartialView(searchParams);
+            else 
                 return View(searchParams);
         }
 
-        private ActionResult DispatchToList(int[] ids, string searchType, bool? partial)
+        private ActionResult DispatchToList(int[] ids, string searchType, bool? Partial)
         {
             if (ids == null || searchType == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -83,8 +92,8 @@ namespace LibraryAdmin2.Controllers
             {
                 UrlBuilder url = new UrlBuilder(this, "List", searchType);
                 //url.AppendParam("actionLabelClass", "btn-select");
-                if (partial == true)
-                    url.AppendParam("partial", true);
+                if (Partial == true)
+                    url.AppendParam("Partial", true);
                 //if (toAction != null)
                 //    url.AppendParam("toAction", toAction);
                 //if (actionLabel != null)

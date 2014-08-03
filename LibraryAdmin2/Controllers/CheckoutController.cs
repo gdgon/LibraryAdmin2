@@ -141,7 +141,7 @@ namespace LibraryAdmin2.Controllers
                                  string actionLabel,
                                  int[] ids,
                                  string actionLabelClass,
-                                 bool? partial)
+                                 bool? Partial)
         {
             if (toAction != null)
             {
@@ -162,7 +162,7 @@ namespace LibraryAdmin2.Controllers
                 // List specified subset 
                 List<Checkout> checkoutsToList = db.Checkouts.Where(a => ids.Contains(a.Id))
                                                        .ToList();
-                if (partial == true)
+                if (Partial == true)
                     return PartialView(checkoutsToList);
                 else
                     return View(checkoutsToList);
@@ -173,7 +173,7 @@ namespace LibraryAdmin2.Controllers
                 var allCheckouts = db.Checkouts.ToList();
                 if (allCheckouts != null)
                 {
-                    if (partial == true)
+                    if (Partial == true)
                         return PartialView(allCheckouts);
                     else
                         return View(allCheckouts);

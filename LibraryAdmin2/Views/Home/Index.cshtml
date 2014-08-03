@@ -2,8 +2,14 @@
     ViewBag.Title = "Home Page";
 }
 
+@Scripts.Render("~/bundles/jquery")
+
 <div class="jumbotron">
     <p>Welcome to MyLibrary</p>
+</div>
+
+<div class="row">
+    @Html.Action("Search", "Search", new { Partial = true})
 </div>
 
 <div class="row">

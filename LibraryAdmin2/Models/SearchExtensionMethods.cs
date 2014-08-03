@@ -32,7 +32,7 @@ namespace LibraryAdmin2.Models
         // Book search
         public static int[] Search(this DbSet<Book> bookDbSet, SearchViewModel searchParams)
         {
-            int[] ids = bookDbSet.Where(a => a.Title.Contains(searchParams.Title)).Intersect(
+            int[] ids = bookDbSet.Where(a => a.Title.Contains(searchParams.Title)).Union(
                         bookDbSet.Where(a => a.Isbn.Contains(searchParams.Isbn)))
                                 .Select(a => a.Id)
                                 .ToArray();
