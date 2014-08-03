@@ -37,7 +37,7 @@ namespace LibraryAdmin2.Controllers
             if (grouped.Count() > 0)
             {
                 var topGroup = grouped.First();
-                var id = topGroup.First().BorrowerId;
+                var id = topGroup.First().BookId;
                 topBook = db.Books.Find(id);
                 ViewBag.Num = topGroup.Count();
             }
