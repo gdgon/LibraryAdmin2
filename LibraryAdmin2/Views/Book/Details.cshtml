@@ -68,11 +68,15 @@
 
     </dl>
 </div>
-<p>
-    @if (Request.IsAuthenticated)
-    {
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) @:|
-        @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) @:|
+@if (Request.IsAuthenticated)
+{
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+        |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+        |
         @Html.ActionLink("Back to List", "Index")
-    }
-</p>
+    </p>
+
+    @Html.Action("Relevant", "LogEvent", new { RecordType = "Book", id = Model.Id});
+}

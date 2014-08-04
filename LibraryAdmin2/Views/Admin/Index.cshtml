@@ -1,11 +1,113 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
+<h3>Checkout</h3>
 <ul style="padding-left: 0">
     <li>@Html.ActionLink("List checkout requests", "ListCheckoutRequests")</li>
     <li>@Html.ActionLink("Return a book", "Return")</li>
+    <li>@Html.ActionLink("Create a checkout request", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Book",
+                                       ListAction = "Borrow",
+                                       ListActionController = "Checkout",
+                                       ListLabel = "Request Checkout"
+                                   }, null)</li>
+</ul>
+
+<h3>Books</h3>
+<ul style="padding-left: 0">
+    <li>@Html.ActionLink("List Books", "List", "Book")</li>
+    <li>@Html.ActionLink("Add a Book", "Create", "Book")</li>
+    <li>
+        @Html.ActionLink("Edit a Book", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Book",
+                                       ListAction = "Edit",
+                                       ListLabel = "Edit"
+                                   }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Delete a Book", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Book",
+                                       ListAction = "Delete",
+                                       ListLabel = "Delete"
+                                   }, null)
+    </li>
+</ul>
+
+<h3>Authors</h3>
+<ul style="padding-left: 0">
+    <li>@Html.ActionLink("List Authors", "List", "Author")</li>
+    <li>@Html.ActionLink("Add an Author", "Create", "Author")</li>
+    <li>
+        @Html.ActionLink("Edit an Author", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Author",
+                                       ListAction = "Edit",
+                                       ListLabel = "Edit",
+                                   }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Delete an Author", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Author",
+                                       ListAction = "Delete",
+                                       ListLabel = "Delete",
+                                   }, null)
+    </li>
+</ul>
+
+<h3>Borrowers</h3>
+<ul style="padding-left: 0">
+    <li>@Html.ActionLink("List Borrowers", "List", "Borrower")</li>
+    <li>@Html.ActionLink("Add a Borrower", "Create", "Borrower")</li>
+    <li>
+        @Html.ActionLink("Edit a Borrower", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Borrower",
+                                       ListAction = "Edit",
+                                       ListLabel = "Edit"
+                                   }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Delete a Borrower", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Borrower",
+                                       ListAction = "Delete",
+                                       ListLabel = "Delete"
+                                   }, null)
+    </li>
+</ul>
+
+<h3>Policies</h3>
+<ul style="padding-left: 0">
+    <li>@Html.ActionLink("Add a Policy", "Create", "Policy")</li>
+    <li>@Html.ActionLink("View Policies", "Index", "Policy")</li>
+    @*<li>
+        @Html.ActionLink("Edit a Policy", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Policy",
+                                       ListAction = "Edit",
+                                       ListLabel = "Edit"
+                                   }, null)
+    </li>
+    <li>
+        @Html.ActionLink("Delete a Policy", "Search", "Search",
+                                   new
+                                   {
+                                       SearchType = "Policy",
+                                       ListAction = "Delete",
+                                       ListLabel = "Delete"
+                                   }, null)
+    </li>*@
 </ul>

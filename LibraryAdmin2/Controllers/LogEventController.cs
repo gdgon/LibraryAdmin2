@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using LibraryAdmin2.Models;
+using LibraryAdmin2.Utils;
 
 namespace LibraryAdmin2.Controllers
 {
@@ -75,13 +76,37 @@ namespace LibraryAdmin2.Controllers
                 ViewBag.PolicyId = policy.Id;
                 ViewBag.PolicyText = policy.Name;
             }
-
-            ;
-            
-
-
-    
             return View(logEvent);
+        }
+
+        // Get /LogEvent/Relevant/5
+        public ActionResult Relevant(string RecordType, int id)
+        {
+            List<LogEvent> events = new List<LogEvent>();
+
+            switch (RecordType)
+            {
+                case "Book":
+                    var book = db.Books.Find(id);
+                    events = db.LogEvents.Where(e => e.BookId == book.Id).ToList();
+                    break;
+                case "Author":
+                    var author = db.Authors.Find(id);
+                    events = db.LogEvents.Where(e => e.AuthorId == author.Id).ToList();
+                    break;
+                case "Borrower":
+                    var borrower = db.Borrowers.Find(id);
+                    events = db.LogEvents.Where(e => e.BorrowerId == borrower.Id).ToList();
+                    break;
+                case "Policy":
+                    var policy = db.Policies.Find(id);
+                    events = db.LogEvents.Where(e => e.PolicyId == policy.Id).ToList();
+                    break;
+                default:
+                    break;
+            }
+
+            return PartialView("List", events);
         }
 
         // GET: /LogEvent/List
