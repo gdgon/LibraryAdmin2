@@ -33,6 +33,54 @@ namespace LibraryAdmin2.Controllers
             {
                 return HttpNotFound();
             }
+
+            if (logEvent.BorrowerId > 0)
+            {
+                var borrower = db.Borrowers.Find(logEvent.BorrowerId);
+                ViewBag.BorrowerId = borrower.Id;
+                ViewBag.BorrowerText = borrower.Name;
+            }
+
+            if (logEvent.BookId > 0)
+            {
+                var book = db.Books.Find(logEvent.BookId);
+                ViewBag.BookId = book.Id;
+                ViewBag.BookText = book.Title;
+            }
+
+            if (logEvent.AuthorId > 0)
+            {
+                var author = db.Authors.Find(logEvent.AuthorId);
+                ViewBag.AuthorId = author.Id;
+                ViewBag.AuthorText = author.Name;
+            }
+
+            if (logEvent.CheckoutId > 0)
+            {
+                var checkout = db.Checkouts.Find(logEvent.CheckoutId);
+                ViewBag.CheckoutId = checkout.Id;
+                ViewBag.CheckoutText = checkout.Id.ToString();
+            }
+
+            if (logEvent.RequestId > 0)
+            {
+                var request = db.CheckoutRequests.Find(logEvent.RequestId);
+                ViewBag.RequestId = request.Id;
+                ViewBag.RequestText = request.Id.ToString();
+            }
+
+            if (logEvent.PolicyId > 0)
+            {
+                var policy = db.Policies.Find(logEvent.PolicyId);
+                ViewBag.PolicyId = policy.Id;
+                ViewBag.PolicyText = policy.Name;
+            }
+
+            ;
+            
+
+
+    
             return View(logEvent);
         }
 

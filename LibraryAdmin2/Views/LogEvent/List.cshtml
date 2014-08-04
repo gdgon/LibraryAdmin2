@@ -26,6 +26,9 @@ else
                 @Html.DisplayNameFor(model => model.Date)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.BorrowerId)
             </th>
             <th>
@@ -59,10 +62,16 @@ else
                     </text>
                 }
                 <td>
-                    @Html.DisplayFor(modelItem => item.Event)
+                    @Html.ActionLink(item.Event.ToString(), "Details", "LogEvent", new { id = item.Id }, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @if (item.BorrowerId > 0)
+                    {
+                        <p>@item.Message</p>
+                    }
                 </td>
                 <td>
                     @if (item.BorrowerId > 0)

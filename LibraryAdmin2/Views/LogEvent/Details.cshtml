@@ -10,13 +10,13 @@
     <h4>LogEvent</h4>
     <hr />
     <dl class="dl-horizontal">
-        @*<dt>
+        <dt>
             @Html.DisplayNameFor(model => model.Message)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Message)
-        </dd>*@
+        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.Event)
@@ -34,6 +34,73 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
+        @if (ViewBag.BorrowerId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.BorrowerId)
+            </dt>
+
+            <dd>
+                @Html.ActionLink((string)ViewBag.BorrowerText, "Details", "Borrower", new { id = (int)ViewBag.BorrowerId }, null)
+            </dd>
+        }
+
+        @if (ViewBag.BookId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.BookId)
+            </dt>
+
+            <dd>
+                @Html.ActionLink((string)ViewBag.BookText, "Details", "Book", new { id = (int)ViewBag.BookId }, null)
+            </dd>
+        }
+
+        @if (ViewBag.AuthorId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.AuthorId)
+            </dt>
+
+            <dd>
+                @Html.ActionLink((string)ViewBag.AuthorText, "Details", "Author", new { id = (int)ViewBag.AuthorId }, null)
+            </dd>
+        }
+
+        @if (ViewBag.CheckoutId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.CheckoutId)
+            </dt>
+
+            <dd>
+                @ViewBag.CheckoutText
+                @*@Html.ActionLink((string)ViewBag.CheckoutText, "Details", "Checkout", new { id = (int)ViewBag.CheckoutId }, null)*@
+            </dd>
+        }
+
+        @if (ViewBag.RequestId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.RequestId)
+            </dt>
+
+            <dd>
+                @ViewBag.RequestText
+                @*@Html.ActionLink((string)ViewBag.RequestText, "Details", "CheckoutRequest", new { id = (int)ViewBag.RequestId }, null)*@
+            </dd>
+        }
+
+        @if (ViewBag.PolicyId != null)
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.PolicyId)
+            </dt>
+
+            <dd>
+                @Html.ActionLink((string)ViewBag.PolicyText, "Details", "Policy", new { id = (int)ViewBag.PolicyId }, null)
+            </dd>
+        }
     </dl>
 </div>
 
