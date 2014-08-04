@@ -24,42 +24,31 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Search/Search
-        public ActionResult Search(bool? Book,
-                                   bool? Author,
-                                   bool? Borrower,
-                                   bool? Checkout,
-                                   bool? Partial)
+        public ActionResult Search(SearchViewModel searchParams)
         {
-            var list = new List<SelectListItem>();
+            var searchTypeList = new List<SelectListItem>();
 
-            if (Book == true)
-                list.Add(new SelectListItem { Value = "Book" });
-            if (Book == true)
-                list.Add(new SelectListItem { Value = "Author" });
-            if (Borrower == true)
-                list.Add(new SelectListItem { Value = "Borrower" });
-            if (Book == true)
-                list.Add(new SelectListItem { Value = "Checkout" });
-            if (Book == null && Author == null && Checkout == null)
+            if (searchParams.SearchType != null)
             {
-                // If no parameters are given
-                list.Add(new SelectListItem { Value = "Book" });
-                list.Add(new SelectListItem { Value = "Author" });
+                searchTypeList.Add(new SelectListItem { Value = searchParams.SearchType });
             }
-            ViewBag.SearchType = new SelectList(list, "Value", "Value");
-
-            if (Partial == true)
-                return PartialView();
             else
-                return View();
+            {
+                // Default values for borrower frontend
+                searchTypeList.Add(new SelectListItem { Value = "Book" });
+                searchTypeList.Add(new SelectListItem { Value = "Author" });
+            }
+            ViewBag.SearchType = new SelectList(searchTypeList, "Value", "Value");
+
+            if (searchParams.Partial == true)
+                return PartialView(searchParams);
+            else
+                return View(searchParams);
         }
 
         // POST: /Search/Search
         [HttpPost]
-        public ActionResult Search(SearchViewModel searchParams,
-                                   string toAction,
-                                   string actionLabel,
-                                   string actionLabelClass)
+        public ActionResult Search(SearchViewModel searchParams, bool? dudd)
         {
             int[] ids;
             switch (searchParams.SearchType)
@@ -80,38 +69,27 @@ namespace LibraryAdmin2.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             if (ids.Length == 0)
-                if (searchParams.Partial == true)
-                    return PartialView("NoResultsFound");
-                else
                     return View("NoResultsFound");
-            else if (ids.Length > 0)
-                return DispatchToList(ids, searchParams.SearchType, searchParams.Partial, toAction, actionLabel, actionLabelClass);
-
-            if (searchParams.Partial == true)
-                return PartialView(searchParams);
             else
-                return View(searchParams);
+                return DispatchToList(ids, searchParams);
         }
 
-        private ActionResult DispatchToList(int[] ids, string searchType, bool? Partial,
-                                   string toAction,
-                                   string actionLabel,
-                                   string actionLabelClass)
+        private ActionResult DispatchToList(int[] ids, SearchViewModel searchParams)
         {
-            if (ids == null || searchType == null)
+            if (ids == null || searchParams.SearchType == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             else
             {
-                UrlBuilder url = new UrlBuilder(this, "List", searchType);
-                //url.AppendParam("actionLabelClass", "btn-select");
-                if (Partial == true)
+                UrlBuilder url = new UrlBuilder(this, "List", searchParams.SearchType);
+                //url.AppendParam("ListLabelClass", "btn-select");
+                
                     url.AppendParam("Partial", true);
-                if (toAction != null)
-                    url.AppendParam("toAction", toAction);
-                if (actionLabel != null)
-                    url.AppendParam("actionLabel", actionLabel);
-                if (actionLabelClass != null)
-                    url.AppendParam("actionLabelClass", actionLabelClass);
+                if (searchParams.ListAction != null)
+                    url.AppendParam("ListAction", searchParams.ListAction);
+                if (searchParams.ListLabel != null)
+                    url.AppendParam("ListLabel", searchParams.ListLabel);
+                if (searchParams.ListLabelClass != null)
+                    url.AppendParam("ListLabelClass", searchParams.ListLabelClass);
                 for (var i = 0; i < ids.Length; i++)
                 {
                     url.AppendParam("ids", ids[i]);

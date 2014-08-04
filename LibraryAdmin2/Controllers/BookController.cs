@@ -143,23 +143,23 @@ namespace LibraryAdmin2.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
         }
 
-        public ActionResult List(string toAction,
-                         string actionLabel,
+        public ActionResult List(string ListAction,
+                         string ListLabel,
                          int[] ids,
-                         string actionLabelClass,
+                         string ListLabelClass,
                          bool? Partial)
         {
-            if (toAction != null)
+            if (ListAction != null)
             {
-                ViewBag.ToAction = toAction;
+                ViewBag.ListAction = ListAction;
 
-                if (actionLabel != null)
-                    ViewBag.ActionLabel = actionLabel;
+                if (ListLabel != null)
+                    ViewBag.ListLabel = ListLabel;
                 else
-                    ViewBag.ActionLabel = "Select";
+                    ViewBag.ListLabel = "Select";
 
-                if (actionLabelClass != null)
-                    ViewBag.ActionLabelClass = actionLabelClass;
+                if (ListLabelClass != null)
+                    ViewBag.ListLabelClass = ListLabelClass;
             }
 
             if (ids != null)

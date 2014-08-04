@@ -40,24 +40,24 @@ namespace LibraryAdmin2.Controllers
         // another action with the Id of the selected items.
         // Optionally lists only items specified in ids.
 
-        public ActionResult List(string toAction,
-                                 string actionLabel,
+        public ActionResult List(string ListAction,
+                                 string ListLabel,
                                  int[] ids,
-                                 string actionLabelClass,
+                                 string ListLabelClass,
                                  bool partial = false)
         {
             ViewBag.Db = db;
-            if (toAction != null)
+            if (ListAction != null)
             {
-                ViewBag.ToAction = toAction;
+                ViewBag.ListAction = ListAction;
 
-                if (actionLabel != null)
-                    ViewBag.ActionLabel = actionLabel;
+                if (ListLabel != null)
+                    ViewBag.ListLabel = ListLabel;
                 else
-                    ViewBag.ActionLabel = "Select";
+                    ViewBag.ListLabel = "Select";
 
-                if (actionLabelClass != null)
-                    ViewBag.ActionLabelClass = actionLabelClass;
+                if (ListLabelClass != null)
+                    ViewBag.ListLabelClass = ListLabelClass;
 
             }
 

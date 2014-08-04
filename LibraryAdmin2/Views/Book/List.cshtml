@@ -6,7 +6,7 @@
 
 <table class="table">
     <tr>
-        @if (ViewBag.ToAction != null)
+        @if (ViewBag.ListAction != null)
         {
             @:
             <th></th>
@@ -33,11 +33,11 @@
     @foreach (var item in Model)
     {
         <tr>
-            @if (ViewBag.ToAction != null)
+            @if (ViewBag.ListAction != null)
             {
                 <text>
                     <td>
-                        @Html.ActionLink((string)ViewBag.ActionLabel, (string)ViewBag.ToAction, new { id = item.Id }, new { @class = ViewBag.ActionLabelClass })
+                        @Html.ActionLink((string)ViewBag.ListLabel, (string)ViewBag.ListAction, new { id = item.Id }, new { @class = ViewBag.ListLabelClass })
                         <p style="display:none" class="id">@item.Id</p>
                         @*@Html.HiddenFor(modelItem => item.Id, new { @class = "Id"})*@
                     </td>
