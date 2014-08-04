@@ -204,6 +204,8 @@ namespace LibraryAdmin2.Models
             {
                 Event = EventTypes.CheckoutReturn,
                 CheckoutId = CheckoutIdParam,
+                BookId = checkout.BookId,
+                BorrowerId = checkout.BorrowerId,
                 Message = String.Format("Returned book \"{0}\" by borrower \"{1}\". Returned on {2}, due date {3}", checkout.Book.Title, checkout.Borrower.Name, DateTime.Now.Date.Date.ToString(), checkout.DueDate.Date.ToString())
             }, db);
         }

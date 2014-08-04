@@ -67,7 +67,7 @@ else
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
-                    @if (item.BorrowerId > 0)
+                    @if (item.Message != null)
                     {
                         <p>@item.Message</p>
                     }
