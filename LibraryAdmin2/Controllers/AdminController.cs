@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace LibraryAdmin2.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();

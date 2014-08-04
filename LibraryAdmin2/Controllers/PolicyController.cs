@@ -10,6 +10,7 @@ using LibraryAdmin2.Models;
 
 namespace LibraryAdmin2.Controllers
 {
+    [Authorize]
     public class PolicyController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();

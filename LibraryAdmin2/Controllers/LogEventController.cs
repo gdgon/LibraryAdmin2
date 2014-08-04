@@ -10,6 +10,7 @@ using LibraryAdmin2.Models;
 
 namespace LibraryAdmin2.Controllers
 {
+    [Authorize]
     public class LogEventController : Controller
     {
         private LibraryAdmin2Db db = new LibraryAdmin2Db();
@@ -35,7 +36,7 @@ namespace LibraryAdmin2.Controllers
             return View(logEvent);
         }
 
-        // GET: /Borrower/List
+        // GET: /LogEvent/List
         // Prints out a list of items with an action link that directs to
         // another action with the Id of the selected items.
         // Optionally lists only items specified in ids.

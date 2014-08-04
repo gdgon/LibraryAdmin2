@@ -18,7 +18,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Author/
         public ActionResult Index()
         {
-            return View(db.Authors.ToList());
+            return RedirectToAction("List");
         }
 
         // GET: /Author/Details/5
@@ -42,6 +42,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Author/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -50,6 +51,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Author/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
@@ -66,6 +68,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Author/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -83,6 +86,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Author/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,FirstName,LastName,ImageUrl,ShortDescription,Description")] Author author)
@@ -98,6 +102,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Author/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,6 +118,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // POST: /Author/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

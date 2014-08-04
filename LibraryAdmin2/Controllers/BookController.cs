@@ -17,7 +17,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Book/
         public ActionResult Index()
         {
-            return View(db.Books.ToList());
+            return RedirectToAction("List");
         }
 
         // GET: /Book/Details/5
@@ -36,6 +36,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Book/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.AuthorId = new SelectList(db.Authors, "Id", "Name");
@@ -45,6 +46,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Book/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Title,Isbn,ImageUrl,ShortDescription,Description,AvailableCopies,AuthorId")] Book book, int[] AuthorId)
@@ -85,6 +87,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Book/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -102,6 +105,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Book/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Title,Isbn,ImageUrl,ShortDescription,Description,AvailableCopies")] Book book)
@@ -117,6 +121,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Book/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -132,6 +137,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // POST: /Book/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

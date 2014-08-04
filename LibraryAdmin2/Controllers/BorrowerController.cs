@@ -17,7 +17,7 @@ namespace LibraryAdmin2.Controllers
         // GET: /Borrower/
         public ActionResult Index()
         {
-            return View(db.Borrowers.ToList());
+            return RedirectToAction("List");
         }
 
         // GET: /Borrower/Details/5
@@ -36,6 +36,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Borrower/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -44,6 +45,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Borrower/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include="Id,Name,FirstName,LastName,DateOfBirth")] Borrower borrower)
@@ -58,6 +60,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Borrower/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,6 +78,7 @@ namespace LibraryAdmin2.Controllers
         // POST: /Borrower/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include="Id,Name,FirstName,LastName")] Borrower borrower)
@@ -88,6 +92,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // GET: /Borrower/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -103,6 +108,7 @@ namespace LibraryAdmin2.Controllers
         }
 
         // POST: /Borrower/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -112,7 +118,7 @@ namespace LibraryAdmin2.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: /Borrower/List
+        // GET: /Boorower/List
         // Prints out a list of authors with an action link that directs to
         // another action with the Id of the selected author.
         // Optionally lists only items specified in ids.
