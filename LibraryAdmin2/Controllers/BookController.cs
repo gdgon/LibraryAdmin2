@@ -144,19 +144,21 @@ namespace LibraryAdmin2.Controllers
         }
 
         public ActionResult List(string ListAction,
-                         string ListLabel,
-                         int[] ids,
-                         string ListLabelClass,
-                         bool? Partial)
+                                 string ListActionController,
+                                 string ListLabel,
+                                 int[] ids,
+                                 string ListLabelClass,
+                                 bool? Partial)
         {
-            if (ListAction != null)
+            if (ListLabel != null)
             {
-                ViewBag.ListAction = ListAction;
+                ViewBag.ListLabel = ListLabel;
 
-                if (ListLabel != null)
-                    ViewBag.ListLabel = ListLabel;
-                else
-                    ViewBag.ListLabel = "Select";
+                if (ListAction != null)
+                    ViewBag.ListAction = ListAction;
+
+                if (ListActionController != null)
+                    ViewBag.ListActionController = ListActionController;
 
                 if (ListLabelClass != null)
                     ViewBag.ListLabelClass = ListLabelClass;

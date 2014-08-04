@@ -4,9 +4,11 @@
     ViewBag.Title = "List";
 }
 
+<h4>Books</h4>
+
 <table class="table">
     <tr>
-        @if (ViewBag.ListAction != null)
+        @if (ViewBag.ListLabel != null)
         {
             @:
             <th></th>
@@ -33,11 +35,11 @@
     @foreach (var item in Model)
     {
         <tr>
-            @if (ViewBag.ListAction != null)
+            @if (ViewBag.ListLabel != null)
             {
                 <text>
                     <td>
-                        @Html.ActionLink((string)ViewBag.ListLabel, (string)ViewBag.ListAction, new { id = item.Id }, new { @class = ViewBag.ListLabelClass })
+                        @Html.ActionLink((string)ViewBag.ListLabel, (string)ViewBag.ListAction, (string)ViewBag.ListActionController, new { id = item.Id }, new { @class = ViewBag.ListLabelClass })
                         <p style="display:none" class="id">@item.Id</p>
                         @*@Html.HiddenFor(modelItem => item.Id, new { @class = "Id"})*@
                     </td>

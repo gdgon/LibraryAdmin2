@@ -16,6 +16,7 @@ namespace LibraryAdmin2.ViewModels
         public string ListAction { get; set; }
         public string ListLabel { get; set; }
         public string ListLabelClass { get; set; }
+        public string ListActionController { get; set; }
 
     }
 }

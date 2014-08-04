@@ -130,19 +130,21 @@ namespace LibraryAdmin2.Controllers
         // Optionally lists only items specified in ids.
 
         public ActionResult List(string ListAction,
+                                 string ListActionController,
                                  string ListLabel,
                                  int[] ids,
                                  string ListLabelClass,
                                  bool? Partial)
         {
-            if (ListAction != null)
+            if (ListLabel != null)
             {
+                ViewBag.ListLabel = ListLabel;
+
+                if (ListAction != null)
                 ViewBag.ListAction = ListAction;
 
-                if (ListLabel != null)
-                    ViewBag.ListLabel = ListLabel;
-                else
-                    ViewBag.ListLabel = "Select";
+                if (ListActionController != null)
+                    ViewBag.ListActionController = ListActionController;
 
                 if (ListLabelClass != null)
                     ViewBag.ListLabelClass = ListLabelClass;

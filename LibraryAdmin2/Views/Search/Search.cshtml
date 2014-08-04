@@ -1,11 +1,14 @@
 ﻿@model LibraryAdmin2.ViewModels.SearchViewModel
 
+@{ViewBag.Title = "Search";}
+
 <link rel="stylesheet" type="text/css" href="~/Content/Site.css">
 <link rel="stylesheet" type="text/css" href="~/Content/bootstrap.css">
 
 @Scripts.Render("~/bundles/jquery")
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
+<br />
 <div id="searchForm">
     @using (Ajax.BeginForm("Search",
                             "Search",
@@ -20,6 +23,7 @@
         <div class="form-horizontal">
             @Html.HiddenFor(m => m.Partial)
             @Html.HiddenFor(m => m.ListAction)
+            @Html.HiddenFor(m => m.ListActionController)
             @Html.HiddenFor(m => m.ListLabel)
             @Html.HiddenFor(m => m.ListLabelClass)
                         <div class="form-group">

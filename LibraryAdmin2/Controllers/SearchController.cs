@@ -86,6 +86,8 @@ namespace LibraryAdmin2.Controllers
                     url.AppendParam("Partial", true);
                 if (searchParams.ListAction != null)
                     url.AppendParam("ListAction", searchParams.ListAction);
+                if (searchParams.ListActionController != null)
+                    url.AppendParam("ListActionController", searchParams.ListActionController);
                 if (searchParams.ListLabel != null)
                     url.AppendParam("ListLabel", searchParams.ListLabel);
                 if (searchParams.ListLabelClass != null)
