@@ -319,6 +319,7 @@
     <Content Include="Views\Featured\TopBorrower.cshtml" />
     <Content Include="Views\Featured\TopBook.cshtml" />
     <Content Include="Views\Featured\TopAuthor.cshtml" />
+    <None Include="Properties\PublishProfiles\myasp.net.pubxml" />
     <None Include="Views\Shared\EditorTemplates\Picture.cshtml" />
   </ItemGroup>
   <ItemGroup>
