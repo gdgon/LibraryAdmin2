@@ -5,10 +5,9 @@
 }
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryajax")
-<h2>View1</h2>
+<h4>Review Checkout Request</h4>
 
 <div>
-    <h4>CheckoutRequest</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -53,30 +52,46 @@
     </dl>
 </div>
 
-@using (@Html.BeginForm("Approve", "Admin", FormMethod.Post, new { id = "Approve" }))
-{
-    @:Policy
-    @Html.DropDownList("PolicyId", String.Empty)
-    <br />
-    @:Borrower:
-    @Html.Hidden("RequestId", Model.Id)
-    if (ViewBag.Borrower != null)
+<div>
+    @using (@Html.BeginForm("Approve", "Admin", FormMethod.Post, new { id = "Approve" }))
     {
-        @Html.Hidden("BorrowerId", (int)ViewBag.Borrower.Id)
-        @Html.TextBox("BorrowerName", (string)ViewBag.Borrower.Name)
-    }
-    else
-    {
-        @Html.Hidden("BorrowerId")
-        @Html.TextBox("BorrowerName", null, new { @readonly = "readonly" })
-    }
-    <br />
-    <input type="submit" value="Submit" />
-}
+        if (ViewBag.Borrower != null)
+        {
+            <div class="form-group">
+                @Html.Hidden("BorrowerId", (int)ViewBag.Borrower.Id)
+                @Html.Label("Borrower", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <p id="BorrowerName">@ViewBag.Borrower.Name</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="form-group">
+                @Html.Hidden("BorrowerId")
+                @Html.Label("Borrower", new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <p id="BorrowerName"></p>
+                </div>
+            </div>
+        }
 
-
-Search
-@using (@Ajax.BeginForm("Search", "Search", new { Partial = true, SearchType = "Borrower" },
+        <div class="form-group">
+            @Html.Label("Policy", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("PolicyId", String.Empty)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Approve Checkout Request" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
+<h4>Search for a different borrower</h4>
+<div>
+    @using (@Ajax.BeginForm("Search", "Search", new { Partial = true, SearchType = "Borrower" },
                         new AjaxOptions
                         {
                             HttpMethod = "POST",
@@ -84,26 +99,40 @@ Search
                             InsertionMode = InsertionMode.Replace
                         },
                         new { id = "userSearch" }))
-{
-    @Html.Hidden("ListAction", " ")
-    @Html.Hidden("ListLabel", "Select")
-    @Html.Hidden("ListLabelClass", "selectBorrower")
-    @Html.Hidden("partial", true)
+    {
+        @Html.Hidden("ListAction", " ")
+        @Html.Hidden("ListLabel", "Select")
+        @Html.Hidden("ListLabelClass", "selectBorrower")
+        @Html.Hidden("partial", true)
 
-    @Html.TextBox("FirstName") <br />
-    @Html.TextBox("LastName")<br />
-    <input type="submit" value="Search" form="userSearch" />
-}
+        <div class="form-group">
+            @Html.Label("FirstName", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("FirstName")
+            </div>
+        </div>
 
+        <div class="form-group">
+            @Html.Label("LastName", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBox("LastName")
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Search for Borrower" form="userSearch" class="btn btn-default" />
+            </div>
+        </div>
+    }
+</div>
 <div id="searchResults">
-    Accept
-    <br />
-    Reject <br />
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
 </div>
+
 <script>
     $(document).on("click", ".selectBorrower",
         function (e) {
@@ -111,6 +140,6 @@ Search
             id = $(this).closest("tr").find(".id").text();
             name = $(this).closest("tr").find(".name").text().trim();
             $("#BorrowerId").val(id);
-            $("#BorrowerName").val(name);
+            $("#BorrowerName").text(name);
         });
 </script>
