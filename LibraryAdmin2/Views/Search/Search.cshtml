@@ -31,24 +31,24 @@
                             <div class="col-md-10">                                @Html.DropDownList("SearchType")
                             </div>
                         </div>
-            <div class="form-group">
+            <div class="form-group author-field">
                 @Html.Label("First Name", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.FirstName)
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group author-field">
                 @Html.Label("Last Name", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.LastName)
                 </div>
-            </div><div class="form-group">
+            </div><div class="form-group book-field">
                 @Html.Label("Title", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.Title)
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group book-field">
                 @Html.Label("ISBN", new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(m => m.Isbn)
@@ -65,3 +65,34 @@
 
 <div id="searchResults">
 </div>
+
+<script>
+    $(function () {
+        SwitchFields();
+        $("#SearchType").on("change", function () {
+            SwitchFields();
+        })
+    })
+
+    function SwitchFields() {
+        switch ($("#SearchType").val()) {
+            case "Book":
+                ShowBookFields();
+                break;
+            case "Author":
+                ShowAuthorFields();
+                break;
+            default:
+                break;
+        }
+    }
+    function ShowBookFields() {
+        $(".book-field").show();
+        $(".author-field").hide();
+    }
+
+    function ShowAuthorFields() {
+        $(".book-field").hide();
+        $(".author-field").show();
+    }
+</script>
